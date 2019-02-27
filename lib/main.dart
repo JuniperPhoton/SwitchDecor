@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:switch_decor/drawing_view.dart';
+import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/widget/fabs.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:ui' as UI;
@@ -53,8 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<bool> _saveImage(String path) async {
     try {
-      var image =
-          await getRendered(Size(1000, 1000), _frameImage, _contentImage);
+      var image = await getRendered(_frameImage, _contentImage);
       var bytes = await image.toByteData(format: UI.ImageByteFormat.png);
       File(path).writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
       return true;

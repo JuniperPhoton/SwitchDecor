@@ -3,6 +3,7 @@ import 'dart:ui' as UI;
 
 import 'package:flutter/material.dart';
 import 'package:switch_decor/main.dart';
+import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/util/build.dart';
 import 'package:switch_decor/util/color.dart';
 
@@ -18,7 +19,10 @@ class CanvasPainter extends CustomPainter {
   Matrix4 matrix;
   Float64List _list;
 
-  CanvasPainter({this.frameImage, this.contentImage, this.matrix});
+  ColorSet colorSet;
+
+  CanvasPainter(
+      {this.frameImage, this.contentImage, this.matrix, this.colorSet});
 
   final _paint = Paint();
   final _framePaint = Paint();
@@ -65,7 +69,10 @@ class CanvasPainter extends CustomPainter {
 
     matrix?.copyIntoArray(_list);
 
-    canvas.drawColor(hexToColor("ff40708a"), BlendMode.src);
+    if (colorSet != null) {
+      canvas.drawColor(colorSet.backgroundColor, BlendMode.src);
+    }
+
     canvas.save();
 
     if (_list != null) {
@@ -75,8 +82,10 @@ class CanvasPainter extends CustomPainter {
     if (frameImage != null) {
       var frameRect = _getDstRect(frameImage.width, frameImage.height, size);
 
-      _framePaint.colorFilter =
-          ColorFilter.mode(hexToColor("ff164c62"), BlendMode.srcIn);
+//      if (colorSet != null) {
+//        _framePaint.colorFilter =
+//            ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
+//      }
 
       canvas.drawImageRect(
           frameImage, _getRectFromImage(frameImage), frameRect, _framePaint);

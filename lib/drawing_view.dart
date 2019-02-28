@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:switch_decor/drawing/painter.dart';
-import 'package:switch_decor/main.dart';
+import 'package:switch_decor/widget/drawing_parent.dart';
 
 class DrawingView extends StatefulWidget {
   @override
@@ -14,7 +14,6 @@ class _DrawingViewState extends State<DrawingView> {
     var contentImage = parent.contentImage;
     var frameImage = parent.frameImage;
 
-    print("=====build CustomPaint");
     return CustomPaint(
         painter: new CanvasPainter(
             frameImage: frameImage, contentImage: contentImage));

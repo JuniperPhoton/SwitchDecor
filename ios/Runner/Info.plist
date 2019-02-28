@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Request permissoin to save image to library</string>
 </dict>
 </plist>

@@ -66,9 +66,6 @@ class CanvasPainter extends CustomPainter {
     matrix?.copyIntoArray(_list);
 
     canvas.drawColor(hexToColor("ff40708a"), BlendMode.src);
-
-    print(_list);
-
     canvas.save();
 
     if (_list != null) {

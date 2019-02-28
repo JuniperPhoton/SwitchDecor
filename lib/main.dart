@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:switch_decor/drawing_view.dart';
+import 'package:switch_decor/platform/dir_provider.dart';
 import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/widget/fabs.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,25 +31,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  DrawingView _drawingView;
   UI.Image _contentImage;
   UI.Image _frameImage;
-
-  _getDrawingView() {
-    _drawingView = DrawingView();
-    return _drawingView;
-  }
 
   _notify(BuildContext context, String msg) {
     Scaffold.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
   _renderToFile(BuildContext context) async {
-    if (_drawingView == null) return;
+    var saveResult = false;
 
-    bool ok = await _saveImage(
-        "/sdcard/${DateTime.now().millisecondsSinceEpoch}.png");
-    var text = ok ? "Succeed to save to file" : "Failed to save";
+    var path = await DirProvider.getFileToSave(
+        "${DateTime.now().millisecondsSinceEpoch}.png");
+
+    if (path != null) {
+      print("File to save: $path");
+      var file = File(path);
+      saveResult = await _saveImage(file.path);
+    } else {
+      print("Failed to get file to save");
+    }
+
+    if (saveResult) {
+      saveResult = await DirProvider.notifyScanFile(path);
+    }
+
+    var text = saveResult ? "Succeed to save to file" : "Failed to save";
     _notify(context, text);
   }
 
@@ -67,7 +75,6 @@ class _MyHomePageState extends State<MyHomePage> {
     var file = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     if (file == null) {
-      _notify(context, "Please select an image.");
       return;
     }
 
@@ -121,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: Size.infinite.width,
             height: Size.infinite.height,
             child: DrawingParentWidget(_contentImage, _frameImage,
-                child: _getDrawingView()),
+                child: DrawingView()),
           ),
           SafeArea(
             child: Container(

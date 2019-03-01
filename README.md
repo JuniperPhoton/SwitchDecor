@@ -1,16 +1,38 @@
-# switch_decor
+# SwitchDecor
 
-A new Flutter application.
+An app to help you adding frame to your favourite screenshots from Nintendo Switch.
 
-## Getting Started
+This project is written in Flutter, supporting both iOS and Android platform.
 
-This project is a starting point for a Flutter application.
+![](./design/output.jpg)
 
-A few resources to get you started if this is your first Flutter project:
+## Progress
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+This project is still **under construction**, here is the features checklist:
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+* [ ] Implement feedbacks.
+* [ ] Fix weird composing issue on iPhone.
+* [ ] Animating on color changes.
+* [ ] Support extracting primary color from images.
+
+## MIT License
+
+Copyright (c) [2019] [JuniperPhoton]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

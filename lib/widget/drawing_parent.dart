@@ -10,8 +10,8 @@ class DrawingParentWidget extends InheritedWidget {
       {Key key, @required Widget child})
       : super(key: key, child: child);
 
-  UI.Image _contentImage;
-  UI.Image _frameImage;
+  final UI.Image _contentImage;
+  final UI.Image _frameImage;
 
   UI.Image get contentImage => _contentImage;
 

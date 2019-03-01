@@ -2,18 +2,18 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:switch_decor/dimensions.dart';
 import 'package:switch_decor/drawing_view.dart';
 import 'package:switch_decor/model/color_set.dart';
+import 'package:switch_decor/platform/device.dart';
 import 'package:switch_decor/platform/dir_provider.dart';
 import 'package:switch_decor/util/drawing.dart';
-import 'package:switch_decor/util/misc.dart';
+import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/color_parent.dart';
 import 'package:switch_decor/widget/drawing_parent.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:ui' as UI;
-
-const LEFT_MARGIN = 20.0;
 
 void main() => runApp(MyApp());
 
@@ -129,32 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedColorIndex = 0;
 
-  final List<ColorSet> _colorSets = [
-    ColorSet(
-        backgroundColor: Color(0xff54bddb), foregroundColor: Color(0xff3b8499)),
-    ColorSet(
-        backgroundColor: Color(0xffabdbe6), foregroundColor: Color(0xff7ca0a8)),
-    ColorSet(
-        backgroundColor: Color(0xff528B7C), foregroundColor: Color(0xff396157)),
-    ColorSet(
-        backgroundColor: Color(0xffDD6991), foregroundColor: Color(0xff9b4965)),
-    ColorSet(
-        backgroundColor: Color(0xffd32d26), foregroundColor: Color(0xff941f1b)),
-    ColorSet(
-        backgroundColor: Color(0xffeda13a), foregroundColor: Color(0xffa67129)),
-    ColorSet(
-        backgroundColor: Color(0xff4242ef), foregroundColor: Color(0xff2e2ea7)),
-  ];
+  final List<ColorSet> _colorSets = generateDefaultColorSets();
 
   ColorSet get _colorSet => _colorSets[_selectedColorIndex];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Container(
-        color: _colorSet.foregroundColor,
-        width: 300,
-      ),
+      drawer: AboutDrawer(_colorSet.foregroundColor),
       body: Stack(
         children: <Widget>[
           Stack(
@@ -164,14 +146,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.topLeft,
                 child: Container(
                   color: _colorSet.foregroundColor,
-                  width: LEFT_MARGIN,
+                  width: LEFT_BANNER_WIDTH,
                 ),
               ),
               SafeArea(
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    width: LEFT_MARGIN,
+                    width: LEFT_BANNER_WIDTH,
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Text(
@@ -188,40 +170,49 @@ class _MyHomePageState extends State<MyHomePage> {
             width: Size.infinite.width,
             height: Size.infinite.height,
             child: Container(
-              margin: EdgeInsets.only(left: LEFT_MARGIN),
+              margin: EdgeInsets.only(left: LEFT_BANNER_WIDTH),
               child: DrawingParentWidget(_contentImage, _frameImage,
                   child: DrawingView()),
             ),
           ),
           SafeArea(
+            bottom: false,
             child: Container(
-              margin: EdgeInsets.only(left: 36, top: 16),
+              margin: EdgeInsets.only(
+                  left: TITLE_MARGIN + LEFT_BANNER_WIDTH, top: TITLE_MARGIN),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   "HOME".toUpperCase(),
-                  style: TextStyle(color: Colors.white, fontSize: 30),
+                  style:
+                      TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE),
                 ),
               ),
             ),
           ),
         ],
       ),
-      floatingActionButton: Builder(builder: (context) {
-        return ColorListParentWidget(
-          _colorSets,
-          child: BottomActionWidget(
-            onTapFab: () {
-              _renderToFile(context);
-            },
-            onTapPickImage: () {
-              _pickImage(context);
-            },
-            onTapColor: (index) {
-              setState(() {
-                _selectedColorIndex = index;
-              });
-            },
+      floatingActionButton: Builder(builder: (c) {
+        return Container(
+          padding: EdgeInsets.only(
+              bottom: isIPhoneX(context)
+                  ? MediaQuery.of(context).padding.bottom / 2
+                  : 0),
+          child: ColorListParentWidget(
+            _colorSets,
+            child: BottomActionWidget(
+              onTapFab: () {
+                _renderToFile(c);
+              },
+              onTapPickImage: () {
+                _pickImage(c);
+              },
+              onTapColor: (index) {
+                setState(() {
+                  _selectedColorIndex = index;
+                });
+              },
+            ),
           ),
         );
       }),

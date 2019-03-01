@@ -6,7 +6,7 @@ class ColorListParentWidget extends InheritedWidget {
     return context.inheritFromWidgetOfExactType(ColorListParentWidget);
   }
 
-  List<ColorSet> _colorSets;
+  final List<ColorSet> _colorSets;
 
   List<ColorSet> get colorSets => _colorSets;
 

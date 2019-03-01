@@ -2,17 +2,12 @@ import 'dart:typed_data';
 import 'dart:ui' as UI;
 
 import 'package:flutter/material.dart';
-import 'package:switch_decor/main.dart';
+import 'package:switch_decor/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
-import 'package:switch_decor/util/build.dart';
-import 'package:switch_decor/util/color.dart';
-
-const double LEFT = 375;
-const double TOP = 221;
-const double RIGHT = 1144;
-const double BOTTOM = 650;
 
 class CanvasPainter extends CustomPainter {
+  static const TINT_FRAME = false;
+
   UI.Image frameImage;
   UI.Image contentImage;
 
@@ -82,19 +77,19 @@ class CanvasPainter extends CustomPainter {
     if (frameImage != null) {
       var frameRect = _getDstRect(frameImage.width, frameImage.height, size);
 
-//      if (colorSet != null) {
-//        _framePaint.colorFilter =
-//            ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
-//      }
+      if (TINT_FRAME && colorSet != null) {
+        _framePaint.colorFilter =
+            ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
+      }
 
       canvas.drawImageRect(
           frameImage, _getRectFromImage(frameImage), frameRect, _framePaint);
 
       if (contentImage != null) {
-        var leftRatio = LEFT / frameImage.width;
-        var topRatio = TOP / frameImage.height;
-        var rightRatio = RIGHT / frameImage.width;
-        var bottomRatio = BOTTOM / frameImage.height;
+        var leftRatio = FRAME_LEFT_RATIO / frameImage.width;
+        var topRatio = FRAME_TOP_RATIO / frameImage.height;
+        var rightRatio = FRAME_RIGHT_RATIO / frameImage.width;
+        var bottomRatio = FRAME_BOTTOM_RATIO / frameImage.height;
 
         var contentRect = Rect.fromLTRB(
             frameRect.left + leftRatio * frameRect.width,

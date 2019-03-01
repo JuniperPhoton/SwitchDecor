@@ -39,7 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
   UI.Image _frameImage;
 
   _notify(BuildContext context, String msg) {
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text(msg)));
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(msg),
+      duration: Duration(milliseconds: 1000),
+    ));
   }
 
   _renderToFile(BuildContext context) async {

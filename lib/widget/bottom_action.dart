@@ -29,7 +29,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
     return Container(
       width: BOTTOM_ACTION_BAR_COLOR_BUTTON_WIDTH,
       height: BOTTOM_ACTION_BAR_HEIGHT,
-      child: GestureDetector(
+      child: InkResponse(
         onTap: () {
           if (widget.onTapColor != null) {
             widget.onTapColor(index);

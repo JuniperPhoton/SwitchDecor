@@ -25,6 +25,7 @@ import Flutter
         }
     }
     
+    UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.none)
     GeneratedPluginRegistrant.register(with: self)
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

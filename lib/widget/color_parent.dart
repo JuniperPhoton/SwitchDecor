@@ -8,11 +8,15 @@ class ColorListParentWidget extends InheritedWidget {
 
   final List<ColorSet> _colorSets;
   final ScrollController _controller;
+  final int _selectedIndex;
 
   List<ColorSet> get colorSets => _colorSets;
+
   ScrollController get controller => _controller;
 
-  ColorListParentWidget(this._colorSets, this._controller,
+  int get selectedIndex => _selectedIndex;
+
+  ColorListParentWidget(this._colorSets, this._controller, this._selectedIndex,
       {@required Widget child})
       : super(child: child);
 

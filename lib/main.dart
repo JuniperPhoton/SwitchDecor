@@ -256,6 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: ColorListParentWidget(
             _colorSets,
             _controller,
+            _selectedColorIndex,
             child: BottomActionWidget(
               onTapFab: () {
                 _renderToFile(c);

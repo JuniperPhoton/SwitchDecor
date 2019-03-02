@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:switch_decor/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
+import 'package:switch_decor/util/color.dart';
 import 'package:switch_decor/widget/color_parent.dart';
 import 'package:switch_decor/widget/misc.dart';
 
@@ -24,6 +25,11 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
     return parent.colorSets;
   }
 
+  int _getSelectedIndex(BuildContext context) {
+    var parent = ColorListParentWidget.of(context);
+    return parent.selectedIndex;
+  }
+
   Widget _buildListItem(BuildContext context, int index) {
     var set = _getColorSets(context)[index];
     return Container(
@@ -39,6 +45,17 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
           child: Container(
             width: bottomActionBarColorCircleSize,
             height: bottomActionBarColorCircleSize,
+            child: Container(
+              child: Center(
+                child: _getSelectedIndex(context) == index
+                    ? Icon(Icons.check,
+                        color: isLightColor(set.backgroundColor)
+                            ? Colors.black
+                            : Colors.white,
+                        size: 13)
+                    : Container(),
+              ),
+            ),
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: set.backgroundColor,

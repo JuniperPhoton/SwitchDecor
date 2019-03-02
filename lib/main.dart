@@ -153,10 +153,17 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(color: _colorSet.backgroundColor),
               Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  color: _colorSet.foregroundColor,
-                  width: leftBannerWidth,
-                ),
+                child: Builder(builder: (c) {
+                  return GestureDetector(
+                    onTap: () {
+                      Scaffold.of(c).openDrawer();
+                    },
+                    child: Container(
+                      color: _colorSet.foregroundColor,
+                      width: leftBannerWidth,
+                    ),
+                  );
+                }),
               ),
               SafeArea(
                 child: Align(

@@ -100,8 +100,8 @@ class AboutDrawer extends StatelessWidget {
                 "SwitchDecor",
                 style: _titleStyle,
               ),
-              _createVerticalSpace(),
               Container(
+                margin: EdgeInsets.only(top: 10),
                 decoration: BoxDecoration(
                     color: Color(0x2e000000),
                     borderRadius: BorderRadius.circular(4)),

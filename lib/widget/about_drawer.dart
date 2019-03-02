@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:switch_decor/dimensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info/package_info.dart';
+
+const GITHUB_URL = "https://github.com/JuniperPhoton/SwitchDecor";
+const TWITTER_URL = "https://twitter.com/JuniperPhoton";
+const WEIBO_URL = "https://weibo.com/p/1005051624312593";
 
 class AboutDrawer extends StatelessWidget {
   final Color _color;
@@ -46,6 +52,36 @@ class AboutDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _getBuildNumber() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.buildNumber;
+  }
+
+  _sendEmail() async {
+    return _launchUrl(
+        "mailto:dengweichao@hotmail.com?subject=SwitchDecor%20Build%20${await _getBuildNumber()}%20feedback");
+  }
+
+  _openGitHub() async {
+    return _launchUrl(GITHUB_URL);
+  }
+
+  _openTwitter() async {
+    return _launchUrl(TWITTER_URL);
+  }
+
+  _openWeibo() async {
+    return _launchUrl(WEIBO_URL);
+  }
+
+  _launchUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("Can not launch $url");
+    }
   }
 
   @override
@@ -112,10 +148,17 @@ class AboutDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _createFeedbackWidget("email", () {
-                      print("on click email");
+                      _sendEmail();
                     }),
-                    _createFeedbackWidget("github", () {}),
-                    _createFeedbackWidget("twitter", () {}),
+                    _createFeedbackWidget("github", () {
+                      _openGitHub();
+                    }),
+                    _createFeedbackWidget("twitter", () {
+                      _openTwitter();
+                    }),
+                    _createFeedbackWidget("weibo", () {
+                      _openWeibo();
+                    }),
                   ],
                 ),
               )

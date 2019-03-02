@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -8,6 +9,7 @@ import 'package:switch_decor/drawing_view.dart';
 import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/platform/device.dart';
 import 'package:switch_decor/platform/dir_provider.dart';
+import 'package:switch_decor/string.dart';
 import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/color_parent.dart';
@@ -52,9 +54,12 @@ class _MyHomePageState extends State<MyHomePage> {
         "${DateTime.now().millisecondsSinceEpoch}.png");
 
     if (path != null) {
-      print("File to save: $path");
+      print("Retrieved file to save: $path");
       var file = File(path);
-      saveResult = await _saveImage(file.path);
+
+      file = await _saveImage(file.path);
+      saveResult = file != null;
+      print("File saved: $file");
     } else {
       print("Failed to get file to save");
     }
@@ -67,14 +72,15 @@ class _MyHomePageState extends State<MyHomePage> {
     _notify(context, text);
   }
 
-  Future<bool> _saveImage(String path) async {
+  Future<File> _saveImage(String path) async {
     try {
       var image = await getRendered(_frameImage, _contentImage, _colorSet);
       var bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-      File(path).writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
-      return true;
+      var file = File(path);
+      await file.writeAsBytes(bytes.buffer.asInt8List());
+      return file;
     } catch (e) {
-      return false;
+      return null;
     }
   }
 
@@ -157,11 +163,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   alignment: Alignment.topLeft,
                   child: Container(
                     width: leftBannerWidth,
+                    margin: EdgeInsets.only(top: 12),
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Text(
-                        "A\nB\nO\nU\nT",
-                        style: TextStyle(color: Colors.white),
+                        aboutTextVertical,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: aboutTitleFontSize),
                       ),
                     ),
                   ),
@@ -181,14 +189,16 @@ class _MyHomePageState extends State<MyHomePage> {
           SafeArea(
             bottom: false,
             child: Container(
-              margin: EdgeInsets.only(
-                  left: titleMargin + leftBannerWidth, top: titleMargin),
+              margin: EdgeInsets.only(top: titleMargin),
               child: Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.topCenter,
                 child: Text(
-                  "HOME".toUpperCase(),
-                  style:
-                      TextStyle(color: Colors.white, fontSize: titleFontSize),
+                  appName.toUpperCase(),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: titleFontSize,
+                      letterSpacing: titleLetterSpacing,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),

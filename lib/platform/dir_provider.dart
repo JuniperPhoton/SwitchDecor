@@ -8,8 +8,12 @@ class DirProvider {
   static Future<String> getFileToSave(String name) async {
     try {
       if (Platform.isIOS) {
-        Directory appDocDir = await getTemporaryDirectory();
-        return File("${appDocDir.path}/$name").path;
+        var appDocDir = await getApplicationDocumentsDirectory();
+        var screenDir = Directory(appDocDir.path + "/screen");
+        if (!await screenDir.exists()) {
+          await screenDir.create();
+        }
+        return Uri.parse("${screenDir.path}/$name").path;
       }
       final Future<String> result =
           platform.invokeMethod('getPictureDir', {"name": name});

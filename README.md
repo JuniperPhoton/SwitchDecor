@@ -11,7 +11,7 @@ This project is written in Flutter, supporting both iOS and Android platform.
 This project is still **under construction**, here is the features checklist:
 
 * [x] Implement feedbacks.
-* [ ] Fix weird composing issue on iPhone.
+* [x] Fix weird composing issue on iPhone.
 * [ ] Animate on color changes.
 * [ ] Support extracting primary color from images.
 

@@ -3,7 +3,9 @@ const double drawerWidth = 320.0;
 
 const double titleMargin = 16.0;
 
-const double titleFontSize = 30.0;
+const double titleFontSize = 23.0;
+const double titleLetterSpacing = 8.0;
+const double aboutTitleFontSize = 10;
 
 const double frameLeftRatio = 375;
 const double frameTopRatio = 221;

@@ -51,6 +51,10 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
     );
   }
 
+  _getScrollController(BuildContext context) {
+    return ColorListParentWidget.of(context).controller;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -69,6 +73,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
               child: Stack(
                 children: <Widget>[
                   ListView.builder(
+                    controller: _getScrollController(context),
                     physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(left: 8, right: 60),
                     itemCount: _getColorSets(context).length,

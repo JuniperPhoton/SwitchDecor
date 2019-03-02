@@ -43,5 +43,7 @@
 	<false/>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Request permissoin to save image to library</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Needs to read your photo library</string>
 </dict>
 </plist>

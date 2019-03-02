@@ -7,6 +7,7 @@ import 'package:switch_decor/model/color_set.dart';
 
 class CanvasPainter extends CustomPainter {
   static const TINT_FRAME = false;
+  static const TINT_FRAME_ON_DARK_TEXT = true;
 
   ui.Image frameImage;
   ui.Image contentImage;
@@ -15,9 +16,14 @@ class CanvasPainter extends CustomPainter {
   Float64List _list;
 
   ColorSet colorSet;
+  bool darkTextColor = false;
 
   CanvasPainter(
-      {this.frameImage, this.contentImage, this.matrix, this.colorSet});
+      {this.frameImage,
+      this.contentImage,
+      this.matrix,
+      this.colorSet,
+      this.darkTextColor = false});
 
   final _paint = Paint();
   final _framePaint = Paint();
@@ -68,8 +74,6 @@ class CanvasPainter extends CustomPainter {
       canvas.drawColor(colorSet.backgroundColor, BlendMode.src);
     }
 
-    canvas.save();
-
     if (_list != null) {
       canvas.transform(_list);
     }
@@ -80,6 +84,9 @@ class CanvasPainter extends CustomPainter {
       if (TINT_FRAME && colorSet != null) {
         _framePaint.colorFilter =
             ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
+      } else if (darkTextColor && TINT_FRAME_ON_DARK_TEXT) {
+        _framePaint.colorFilter =
+            ColorFilter.mode(Colors.black, BlendMode.srcIn);
       }
 
       canvas.drawImageRect(
@@ -101,8 +108,6 @@ class CanvasPainter extends CustomPainter {
             contentRect, _contentPaint);
       }
     }
-
-    canvas.restore();
   }
 
   @override

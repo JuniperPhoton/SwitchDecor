@@ -13,9 +13,12 @@ class _DrawingViewState extends State<DrawingView> {
     var parent = DrawingParentWidget.of(context);
     var contentImage = parent.contentImage;
     var frameImage = parent.frameImage;
+    var darkTextColor = parent.darkTextColor;
 
     return CustomPaint(
         painter: new CanvasPainter(
-            frameImage: frameImage, contentImage: contentImage));
+            frameImage: frameImage,
+            contentImage: contentImage,
+            darkTextColor: darkTextColor));
   }
 }

@@ -18,6 +18,6 @@ class LeftBlurDecoration extends BoxDecoration {
               1
             ], tileMode: TileMode.clamp),
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(BOTTOM_ACTION_BAR_CORNER_RADIUS),
-                bottomRight: Radius.circular(BOTTOM_ACTION_BAR_CORNER_RADIUS)));
+                topRight: Radius.circular(bottomActionBarCornerRadius),
+                bottomRight: Radius.circular(bottomActionBarCornerRadius)));
 }

@@ -4,9 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
 
-const GITHUB_URL = "https://github.com/JuniperPhoton/SwitchDecor";
-const TWITTER_URL = "https://twitter.com/JuniperPhoton";
-const WEIBO_URL = "https://weibo.com/p/1005051624312593";
+const githubUrl = "https://github.com/JuniperPhoton/SwitchDecor";
+const twitterUrl = "https://twitter.com/JuniperPhoton";
+const weiboUrl = "https://weibo.com/p/1005051624312593";
 
 class AboutDrawer extends StatelessWidget {
   final Color _color;
@@ -32,8 +32,8 @@ class AboutDrawer extends StatelessWidget {
 
   _createFeedbackWidget(String svgName, VoidCallback callback) {
     return Container(
-      width: ABOUT_ICON_ROOT_SIZE,
-      height: ABOUT_ICON_ROOT_SIZE,
+      width: aboutIconContainerSize,
+      height: aboutIconContainerSize,
       child: Material(
         color: Color(0x00ffffff),
         type: MaterialType.transparency,
@@ -44,8 +44,8 @@ class AboutDrawer extends StatelessWidget {
           child: Center(
             child: SvgPicture.asset(
               "assets/vector/$svgName.svg",
-              width: ABOUT_ICON_SIZE,
-              height: ABOUT_ICON_SIZE,
+              width: aboutIconSize,
+              height: aboutIconSize,
               fit: BoxFit.contain,
             ),
           ),
@@ -65,15 +65,15 @@ class AboutDrawer extends StatelessWidget {
   }
 
   _openGitHub() async {
-    return _launchUrl(GITHUB_URL);
+    return _launchUrl(githubUrl);
   }
 
   _openTwitter() async {
-    return _launchUrl(TWITTER_URL);
+    return _launchUrl(twitterUrl);
   }
 
   _openWeibo() async {
-    return _launchUrl(WEIBO_URL);
+    return _launchUrl(weiboUrl);
   }
 
   _launchUrl(String url) async {
@@ -88,7 +88,7 @@ class AboutDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: _color,
-      width: DRAWER_WIDTH,
+      width: drawerWidth,
       height: double.infinity,
       child: SafeArea(
         child: Center(

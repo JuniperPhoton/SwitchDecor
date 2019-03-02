@@ -1,6 +1,6 @@
-import 'package:flutter/services.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart';
 
 class DirProvider {
   static const platform = const MethodChannel('DirProvider');
@@ -22,8 +22,8 @@ class DirProvider {
 
   static Future<bool> notifyScanFile(String path) async {
     try {
-      final Future<bool> result = platform
-          .invokeMethod('notifyScanFile', {"path": path});
+      final Future<bool> result =
+          platform.invokeMethod('notifyScanFile', {"path": path});
       return result;
     } on PlatformException catch (e) {
       print("Failed to getPictureDir: '${e.message}'.");

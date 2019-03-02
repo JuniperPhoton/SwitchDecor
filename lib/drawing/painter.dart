@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-import 'dart:ui' as UI;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:switch_decor/dimensions.dart';
@@ -8,8 +8,8 @@ import 'package:switch_decor/model/color_set.dart';
 class CanvasPainter extends CustomPainter {
   static const TINT_FRAME = false;
 
-  UI.Image frameImage;
-  UI.Image contentImage;
+  ui.Image frameImage;
+  ui.Image contentImage;
 
   Matrix4 matrix;
   Float64List _list;
@@ -50,7 +50,7 @@ class CanvasPainter extends CustomPainter {
     return Rect.fromLTWH(left, top, targetWidth, targetHeight);
   }
 
-  _getRectFromImage(UI.Image image) {
+  _getRectFromImage(ui.Image image) {
     return Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
   }
 
@@ -86,10 +86,10 @@ class CanvasPainter extends CustomPainter {
           frameImage, _getRectFromImage(frameImage), frameRect, _framePaint);
 
       if (contentImage != null) {
-        var leftRatio = FRAME_LEFT_RATIO / frameImage.width;
-        var topRatio = FRAME_TOP_RATIO / frameImage.height;
-        var rightRatio = FRAME_RIGHT_RATIO / frameImage.width;
-        var bottomRatio = FRAME_BOTTOM_RATIO / frameImage.height;
+        var leftRatio = frameLeftRatio / frameImage.width;
+        var topRatio = frameTopRatio / frameImage.height;
+        var rightRatio = frameRightRatio / frameImage.width;
+        var bottomRatio = frameBottomRatio / frameImage.height;
 
         var contentRect = Rect.fromLTRB(
             frameRect.left + leftRatio * frameRect.width,

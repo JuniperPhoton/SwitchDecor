@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,6 @@ import 'package:switch_decor/widget/color_parent.dart';
 import 'package:switch_decor/widget/drawing_parent.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:ui' as UI;
 
 void main() => runApp(MyApp());
 
@@ -35,8 +35,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  UI.Image _contentImage;
-  UI.Image _frameImage;
+  ui.Image _contentImage;
+  ui.Image _frameImage;
 
   _notify(BuildContext context, String msg) {
     Scaffold.of(context).showSnackBar(SnackBar(
@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<bool> _saveImage(String path) async {
     try {
       var image = await getRendered(_frameImage, _contentImage, _colorSet);
-      var bytes = await image.toByteData(format: UI.ImageByteFormat.png);
+      var bytes = await image.toByteData(format: ui.ImageByteFormat.png);
       File(path).writeAsBytes(bytes.buffer.asInt8List(), mode: FileMode.write);
       return true;
     } catch (e) {
@@ -149,14 +149,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 alignment: Alignment.topLeft,
                 child: Container(
                   color: _colorSet.foregroundColor,
-                  width: LEFT_BANNER_WIDTH,
+                  width: leftBannerWidth,
                 ),
               ),
               SafeArea(
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    width: LEFT_BANNER_WIDTH,
+                    width: leftBannerWidth,
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Text(
@@ -173,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
             width: Size.infinite.width,
             height: Size.infinite.height,
             child: Container(
-              margin: EdgeInsets.only(left: LEFT_BANNER_WIDTH),
+              margin: EdgeInsets.only(left: leftBannerWidth),
               child: DrawingParentWidget(_contentImage, _frameImage,
                   child: DrawingView()),
             ),
@@ -182,13 +182,13 @@ class _MyHomePageState extends State<MyHomePage> {
             bottom: false,
             child: Container(
               margin: EdgeInsets.only(
-                  left: TITLE_MARGIN + LEFT_BANNER_WIDTH, top: TITLE_MARGIN),
+                  left: titleMargin + leftBannerWidth, top: titleMargin),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
                   "HOME".toUpperCase(),
                   style:
-                      TextStyle(color: Colors.white, fontSize: TITLE_FONT_SIZE),
+                      TextStyle(color: Colors.white, fontSize: titleFontSize),
                 ),
               ),
             ),

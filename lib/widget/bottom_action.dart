@@ -27,8 +27,8 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
   Widget _buildListItem(BuildContext context, int index) {
     var set = _getColorSets(context)[index];
     return Container(
-      width: BOTTOM_ACTION_BAR_COLOR_BUTTON_WIDTH,
-      height: BOTTOM_ACTION_BAR_HEIGHT,
+      width: bottomActionBarColorButtonWidth,
+      height: bottomActionBarHeight,
       child: InkResponse(
         onTap: () {
           if (widget.onTapColor != null) {
@@ -37,14 +37,14 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
         },
         child: Center(
           child: Container(
-            width: BOTTOM_ACTION_BAR_COLOR_CIRCLE_SIZE,
-            height: BOTTOM_ACTION_BAR_COLOR_CIRCLE_SIZE,
+            width: bottomActionBarColorCircleSize,
+            height: bottomActionBarColorCircleSize,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: set.backgroundColor,
                 border: Border.all(
                     color: set.foregroundColor,
-                    width: BOTTOM_ACTION_BAR_COLOR_CIRCLE_BORDER_WIDTH)),
+                    width: bottomActionBarColorCircleBorderWidth)),
           ),
         ),
       ),
@@ -58,13 +58,13 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
       children: <Widget>[
         Expanded(
           child: Container(
-            height: BOTTOM_ACTION_BAR_HEIGHT,
+            height: bottomActionBarHeight,
             margin: EdgeInsets.only(left: 45),
             child: Card(
               elevation: 6,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
-                      Radius.circular(BOTTOM_ACTION_BAR_CORNER_RADIUS))),
+                      Radius.circular(bottomActionBarCornerRadius))),
               color: Colors.white,
               child: Stack(
                 children: <Widget>[

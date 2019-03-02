@@ -12,8 +12,10 @@ This project is still **under construction**, here is the features checklist:
 
 * [x] Implement feedbacks.
 * [x] Fix weird composing issue on iPhone.
+* [x] Support extracting primary color from images.
 * [ ] Animate on color changes.
-* [ ] Support extracting primary color from images.
+* [ ] Draw an icon.
+* [ ] Change a name?
 
 ## MIT License
 

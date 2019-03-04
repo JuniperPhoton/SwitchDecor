@@ -1,15 +1,15 @@
-package com.juniperphoton.switchdecor
+package com.juniperphoton.switchdecor.plugins
 
 import android.content.Intent
 import android.net.Uri
 import android.os.Environment
-import io.flutter.plugin.common.BinaryMessenger
+import android.util.Log
+import com.juniperphoton.switchdecor.plugins.extensions.simpleError
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import java.io.File
-import android.util.Log;
 
-class DirProviderDelegate : MethodChannel.MethodCallHandler {
+class DirProviderDelegate(private val callback: Callback) : BaseDelegate() {
     interface Callback {
         fun requestPermissions()
         fun sendBroadcast(intent: Intent)
@@ -23,11 +23,13 @@ class DirProviderDelegate : MethodChannel.MethodCallHandler {
     }
 
     private var result: MethodChannel.Result? = null
-    private var callback: Callback? = null
     private var fileName: String? = null
 
+    override val channelName: String
+        get() = CHANNEL_NAME
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        Log.i(TAG, call.method)
+        super.onMethodCall(call, result)
 
         if (call.method == GET_PICTURE_DIR) {
             fileName = call.argument("name")
@@ -42,11 +44,6 @@ class DirProviderDelegate : MethodChannel.MethodCallHandler {
         }
     }
 
-    fun register(messenger: BinaryMessenger, callback: Callback) {
-        this.callback = callback
-        MethodChannel(messenger, CHANNEL_NAME).setMethodCallHandler(this)
-    }
-
     fun onPermissionGranted() {
         var dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         dir = File(dir, "SwitchDecor")
@@ -59,7 +56,7 @@ class DirProviderDelegate : MethodChannel.MethodCallHandler {
 
     fun setResult(path: String?) {
         if (path.isNullOrEmpty()) {
-            result?.error("Failed", null, null)
+            result?.simpleError("Failed")
         } else {
             result?.success(path)
         }

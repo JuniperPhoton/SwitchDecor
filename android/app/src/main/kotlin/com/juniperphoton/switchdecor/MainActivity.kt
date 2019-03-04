@@ -4,6 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
+import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
+import com.juniperphoton.switchdecor.plugins.LauncherDelegate
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 
@@ -13,14 +16,16 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
         private const val REQUEST_PERMISSION_CODE = 0
     }
 
-    private var dirChannelDelegate = DirProviderDelegate()
+    private var dirChannelDelegate = DirProviderDelegate(this)
     private var colorPickerDelegate = ColorPickerDelegate(this)
+    private var launcherDelegate = LauncherDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         GeneratedPluginRegistrant.registerWith(this)
-        dirChannelDelegate.register(flutterView, this)
+        dirChannelDelegate.register(flutterView)
         colorPickerDelegate.register(flutterView)
+        launcherDelegate.register(flutterView)
     }
 
     override fun requestPermissions() {

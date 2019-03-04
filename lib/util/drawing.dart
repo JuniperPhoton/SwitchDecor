@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:switch_decor/drawing/painter.dart';
 import 'package:switch_decor/model/color_set.dart';
 
-/// Draw [contentImage] into [frameImage] and return an [UI.Image].
+/// Draw [contentImage] into [frameImage] and return an [Image].
 ///
 /// return a future to be await.
 Future<Image> getRendered(Image frameImage, Image contentImage,

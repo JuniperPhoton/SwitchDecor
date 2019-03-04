@@ -1,36 +1,37 @@
-package com.juniperphoton.switchdecor
+package com.juniperphoton.switchdecor.plugins
 
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.palette.graphics.Palette
-import io.flutter.plugin.common.BinaryMessenger
+import com.juniperphoton.switchdecor.plugins.extensions.simpleError
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
-class ColorPickerDelegate(private val context: Context) : MethodChannel.MethodCallHandler {
+class ColorPickerDelegate(private val context: Context) : BaseDelegate() {
     companion object {
         private const val PICK_COLOR = "pickColors"
         private const val CHANNEL_NAME = "ColorPicker"
         private const val MAX_SIDE = 1500
     }
 
-    fun register(messenger: BinaryMessenger) {
-        MethodChannel(messenger, CHANNEL_NAME).setMethodCallHandler(this)
-    }
+    override val channelName: String
+        get() = CHANNEL_NAME
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
+        super.onMethodCall(call, result)
+
         if (call.method == PICK_COLOR) {
             val uri = call.argument<String>("uri")
             val bm = decodeBitmap(Uri.parse(uri)) ?: kotlin.run {
-                result.error("Failed to decode bitmap", null, null)
+                result.simpleError("Failed to decode bitmap")
                 return
             }
             val builder = Palette.from(bm)
             builder.generate { p ->
                 if (p == null) {
-                    result.error("Failed to pick colors", null, null)
+                    result.simpleError("Failed to pick colors")
                     return@generate
                 }
 

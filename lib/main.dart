@@ -11,9 +11,11 @@ import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/platform/color_picker.dart';
 import 'package:switch_decor/platform/device.dart';
 import 'package:switch_decor/platform/dir_provider.dart';
+import 'package:switch_decor/platform/launcher.dart';
 import 'package:switch_decor/string.dart';
 import 'package:switch_decor/util/color.dart';
 import 'package:switch_decor/util/drawing.dart';
+import 'package:switch_decor/values.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 import 'package:switch_decor/widget/color_parent.dart';
@@ -52,11 +54,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool get _darkTextColor => isLightColor(_colorSet.backgroundColor);
 
-  _notify(BuildContext context, String msg) {
+  /// Notify user by showing snacking bar.
+  /// Apply [action] if you needed.
+  _notify(BuildContext context, String msg, {SnackBarAction action}) {
     Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(msg),
-      duration: Duration(milliseconds: 1000),
-    ));
+        content: Text(msg),
+        duration: Duration(milliseconds: snackBarDurationMs),
+        action: action));
+  }
+
+  _createActionToLaunchFile(String path) async {
+    return SnackBarAction(
+        label: open,
+        textColor: Colors.white,
+        onPressed: () async {
+          if (!await Launcher.launchFile(path)) {
+            print("Can not launch $path");
+          }
+        });
   }
 
   _renderToFile(BuildContext context) async {
@@ -80,8 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
       saveResult = await DirProvider.notifyScanFile(path);
     }
 
-    var text = saveResult ? "Succeed to save to file" : "Failed to save";
-    _notify(context, text);
+    var text = saveResult ? savedSuccessfully : failedToSave;
+    _notify(context, text,
+        action:
+            Platform.isAndroid ? await _createActionToLaunchFile(path) : null);
   }
 
   Future<File> _saveImage(String path) async {
@@ -133,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var bytes = await file.readAsBytes();
 
     if (bytes == null || bytes.isEmpty) {
-      _notify(context, "Failed to decode image");
+      _notify(context, failedToDecodeImage);
       return;
     }
 

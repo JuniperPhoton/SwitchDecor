@@ -1,0 +1,1 @@
+const snackBarDurationMs = 1000;

@@ -16,6 +16,7 @@ import 'package:switch_decor/string.dart';
 import 'package:switch_decor/util/color.dart';
 import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/values.dart';
+import 'package:switch_decor/widget/AnimatableBackground.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 
@@ -38,7 +39,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
   ScrollController _controller;
 
   ui.Image _contentImage;
@@ -48,9 +50,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<ColorSet> _colorSets = generateDefaultColorSets();
 
-  ColorSet get _colorSet => _colorSets[_selectedColorIndex];
+  ColorSet get _currentColorSet => _colorSets[_selectedColorIndex];
 
-  bool get _darkTextColor => isLightColor(_colorSet.backgroundColor);
+  bool get _darkTextColor => isLightColor(_currentColorSet.backgroundColor);
+
+  AnimationController _animationController;
+  Animation<Color> _colorAnimation;
 
   /// Notify user by showing snacking bar.
   /// Apply [action] if you needed.
@@ -102,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<File> _saveImage(String path) async {
     try {
       var image = await getRendered(
-          _frameImage, _contentImage, _colorSet, _darkTextColor);
+          _frameImage, _contentImage, _currentColorSet, _darkTextColor);
       var bytes = await image.toByteData(format: ui.ImageByteFormat.png);
       var file = File(path);
       await file.writeAsBytes(bytes.buffer.asInt8List());
@@ -118,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var colors = await ColorPicker.pickColors(uri);
     var list = colors.map((c) {
       var color = Color(c);
-      var foreground = Color.alphaBlend(Color(0x4c000000), color);
+      var foreground = Color.alphaBlend(maskColor, color);
       foreground = foreground.withAlpha(255);
       return ColorSet(backgroundColor: color, foregroundColor: foreground);
     }).toList();
@@ -127,12 +132,10 @@ class _MyHomePageState extends State<MyHomePage> {
       _controller?.animateTo(0,
           duration: Duration(milliseconds: 500), curve: Curves.ease);
 
-      setState(() {
-        _colorSets.clear();
-        _colorSets.addAll(list);
-        _colorSets.addAll(generateDefaultColorSets());
-        _selectedColorIndex = 0;
-      });
+      _colorSets.clear();
+      _colorSets.addAll(list);
+      _colorSets.addAll(generateDefaultColorSets());
+      _onTapColor(0);
     }
   }
 
@@ -165,13 +168,6 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _decodeFrameImages();
-    _controller = ScrollController();
-  }
-
   _decodeImageFromPath(String path) async {
     var bytes = await rootBundle.load(path);
     var list = bytes.buffer.asUint8List();
@@ -179,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return await decodeImageFromList(list);
   }
 
-  void _decodeFrameImages() async {
+  _decodeFrameImages() async {
     print("===Decode images");
 
     var frameImage = await _decodeImageFromPath("assets/images/wireframe.png");
@@ -191,15 +187,52 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  _onTapColor(int index) {
+    var currentColorSet = _currentColorSet;
+    var nextColorSet = _colorSets[index];
+
+    _colorAnimation = ColorTween(
+            begin: currentColorSet.backgroundColor,
+            end: nextColorSet.backgroundColor)
+        .animate(_animationController)
+          ..addListener(() {
+            setState(() {
+            });
+          });
+    _animationController.forward(from: 0);
+    _selectedColorIndex = index;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _decodeFrameImages();
+    _controller = ScrollController();
+    _animationController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: colorAnimationDurationMs));
+  }
+
+  @override
+  void dispose() {
+    _animationController?.dispose();
+    super.dispose();
+  }
+
+  _buildBackgroundContainer() {
+    return Container(
+        color: _colorAnimation?.value ?? _currentColorSet.backgroundColor);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AboutDrawer(_colorSet.foregroundColor),
+      drawer: AboutDrawer(_currentColorSet.foregroundColor),
       body: Stack(
         children: <Widget>[
           Stack(
             children: <Widget>[
-              Container(color: _colorSet.backgroundColor),
+              _buildBackgroundContainer(),
               Align(
                 alignment: Alignment.topLeft,
                 child: Builder(builder: (c) {
@@ -208,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Scaffold.of(c).openDrawer();
                     },
                     child: Container(
-                      color: _colorSet.foregroundColor,
+                      color: maskColor,
                       width: leftBannerWidth,
                     ),
                   );
@@ -278,9 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
               _pickImage(c);
             },
             onTapColor: (index) {
-              setState(() {
-                _selectedColorIndex = index;
-              });
+              _onTapColor(index);
             },
             selectedIndex: _selectedColorIndex,
             colorSets: _colorSets,

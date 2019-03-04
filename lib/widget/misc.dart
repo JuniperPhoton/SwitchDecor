@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:switch_decor/dimensions.dart';
+import 'package:switch_decor/res/dimensions.dart';
 
 class LeftBlurDecoration extends BoxDecoration {
   LeftBlurDecoration()

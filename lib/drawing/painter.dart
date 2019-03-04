@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:switch_decor/dimensions.dart';
+import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
 
 class CanvasPainter extends CustomPainter {

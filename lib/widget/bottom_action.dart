@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:switch_decor/dimensions.dart';
+import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/util/color.dart';
 import 'package:switch_decor/widget/misc.dart';

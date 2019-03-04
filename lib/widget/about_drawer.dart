@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:switch_decor/dimensions.dart';
+import 'package:switch_decor/res/dimensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';

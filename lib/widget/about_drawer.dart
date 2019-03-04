@@ -56,7 +56,7 @@ class AboutDrawer extends StatelessWidget {
 
   _getBuildNumber() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return packageInfo.buildNumber;
+    return "v${packageInfo.version} Build ${packageInfo.buildNumber}";
   }
 
   _sendEmail() async {
@@ -110,6 +110,25 @@ class AboutDrawer extends StatelessWidget {
                   "for Android and iOS",
                   style: _contentStyle,
                 ),
+              ),
+              FutureBuilder(
+                future: _getBuildNumber(),
+                builder: (c, d) {
+                  if (d.connectionState == ConnectionState.done) {
+                    return Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Opacity(
+                        opacity: 0.3,
+                        child: Text(
+                          d.data as String,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return null;
+                  }
+                },
               ),
               _createVerticalSpace(),
               Text(

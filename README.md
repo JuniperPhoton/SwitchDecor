@@ -1,6 +1,6 @@
 # SwitchDecor
 
-An app to help you adding frame to your favourite screenshots from Nintendo Switch.
+An app to help you adding frame to your favorite screenshots from Nintendo Switch.
 
 This project is written in Flutter, supporting both iOS and Android platform.
 
@@ -13,7 +13,8 @@ This project is still **under construction**, here is the features checklist:
 * [x] Implement feedbacks.
 * [x] Fix weird composing issue on iPhone.
 * [x] Support extracting primary color from images.
-* [ ] Animate on color changes.
+* [x] Animate on color changes.
+* [ ] Add a progress bar on decoding or composing image.
 * [ ] Draw an icon.
 * [ ] Change a name?
 

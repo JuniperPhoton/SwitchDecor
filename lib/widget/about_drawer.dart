@@ -126,7 +126,7 @@ class AboutDrawer extends StatelessWidget {
                       ),
                     );
                   } else {
-                    return null;
+                    return new Container(width: 0.0, height: 0.0);
                   }
                 },
               ),

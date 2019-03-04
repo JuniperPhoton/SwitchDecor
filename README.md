@@ -8,15 +8,14 @@ This project is written in Flutter, supporting both iOS and Android platform.
 
 ## Progress
 
-This project is still **under construction**, here is the features checklist:
+This project is still **under construction**, and here is the features checklist:
 
-* [x] Implement feedbacks.
-* [x] Fix weird composing issue on iPhone.
-* [x] Support extracting primary color from images.
-* [x] Animate on color changes.
+* [x] ~~Implement feedbacks~~
+* [x] ~~Fix weird composing issue on iPhone~~
+* [x] ~~Support extracting primary color from images~~
+* [x] ~~Animate on color changes~~
 * [ ] Add a progress bar on decoding or composing image.
-* [ ] Draw an icon.
-* [ ] Change a name?
+* [ ] Draw a new icon.
 
 ## Privacy
 

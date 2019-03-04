@@ -19,26 +19,26 @@ import 'package:switch_decor/res/values.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(SwitchDecorApp());
 
-class MyApp extends StatelessWidget {
+class SwitchDecorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.black, fontFamily: "FiraCode"),
-      home: MyHomePage(),
+      theme: ThemeData(primaryColor: Colors.black, fontFamily: fontFamily),
+      home: MainView(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+class MainView extends StatefulWidget {
+  MainView({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainViewState createState() => _MainViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
+class _MainViewState extends State<MainView>
     with SingleTickerProviderStateMixin {
   ScrollController _controller;
 
@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage>
 
     if (list.isNotEmpty) {
       _controller?.animateTo(0,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+          duration: Duration(milliseconds: scrollDurationMs), curve: Curves.ease);
 
       _colorSets.clear();
       _colorSets.addAll(list);

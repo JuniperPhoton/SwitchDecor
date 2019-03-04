@@ -4,3 +4,5 @@ const savedSuccessfully = "Saved to album";
 const failedToSave = "Failed to saved :(";
 const failedToDecodeImage = "Failed to decode image :(";
 const open = "Open";
+
+const fontFamily = "FiraCode";

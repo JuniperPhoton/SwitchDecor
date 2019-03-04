@@ -14,10 +14,10 @@
 *.ipr
 *.iws
 .idea/
-
+*.jks
 # Visual Studio Code related
 .vscode/
-
+**/release
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

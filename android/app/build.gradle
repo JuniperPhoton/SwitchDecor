@@ -21,6 +21,10 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
+def file = localProperties.getProperty("storeFile")
+def pwd = localProperties.getProperty("pwd")
+def alias = localProperties.getProperty("alias")
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -36,8 +40,16 @@ android {
         disable 'InvalidPackage'
     }
 
+    signingConfigs {
+        release {
+            keyAlias alias
+            keyPassword pwd
+            storeFile project.rootProject.file(file)
+            storePassword pwd
+        }
+    }
+
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.juniperphoton.switchdecor"
         minSdkVersion 21
         targetSdkVersion 28
@@ -48,9 +60,14 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "switch_decor.${defaultConfig.versionName}" +
+                            ".${defaultConfig.versionCode}.apk"
+                }
+            }
         }
     }
 }

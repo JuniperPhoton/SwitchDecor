@@ -2,43 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:switch_decor/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/util/color.dart';
-import 'package:switch_decor/widget/color_parent.dart';
 import 'package:switch_decor/widget/misc.dart';
 
 typedef OnTapColor = Function(int index);
 
-class BottomActionWidget extends StatefulWidget {
+class BottomActionWidget extends StatelessWidget {
   final VoidCallback onTapFab;
   final VoidCallback onTapPickImage;
   final OnTapColor onTapColor;
+  final ScrollController scrollController;
+  final List<ColorSet> colorSets;
+  final int selectedIndex;
 
   const BottomActionWidget(
-      {this.onTapFab, this.onTapPickImage, this.onTapColor});
-
-  @override
-  _BottomActionWidgetState createState() => _BottomActionWidgetState();
-}
-
-class _BottomActionWidgetState extends State<BottomActionWidget> {
-  List<ColorSet> _getColorSets(BuildContext context) {
-    var parent = ColorListParentWidget.of(context);
-    return parent.colorSets;
-  }
-
-  int _getSelectedIndex(BuildContext context) {
-    var parent = ColorListParentWidget.of(context);
-    return parent.selectedIndex;
-  }
+      {this.onTapFab,
+      this.onTapPickImage,
+      this.onTapColor,
+      this.scrollController,
+      this.colorSets,
+      this.selectedIndex});
 
   Widget _buildListItem(BuildContext context, int index) {
-    var set = _getColorSets(context)[index];
+    var set = colorSets[index];
     return Container(
       width: bottomActionBarColorButtonWidth,
       height: bottomActionBarHeight,
       child: InkResponse(
         onTap: () {
-          if (widget.onTapColor != null) {
-            widget.onTapColor(index);
+          if (onTapColor != null) {
+            onTapColor(index);
           }
         },
         child: Center(
@@ -47,7 +39,7 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
             height: bottomActionBarColorCircleSize,
             child: Container(
               child: Center(
-                child: _getSelectedIndex(context) == index
+                child: selectedIndex == index
                     ? Icon(Icons.check,
                         color: isLightColor(set.backgroundColor)
                             ? Colors.black
@@ -68,10 +60,6 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
     );
   }
 
-  _getScrollController(BuildContext context) {
-    return ColorListParentWidget.of(context).controller;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -90,10 +78,10 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
               child: Stack(
                 children: <Widget>[
                   ListView.builder(
-                    controller: _getScrollController(context),
+                    controller: scrollController,
                     physics: BouncingScrollPhysics(),
                     padding: EdgeInsets.only(left: 8, right: 60),
-                    itemCount: _getColorSets(context).length,
+                    itemCount: colorSets.length,
                     itemBuilder: (c, i) {
                       return _buildListItem(context, i);
                     },
@@ -103,8 +91,8 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        if (widget.onTapPickImage != null) {
-                          widget.onTapPickImage();
+                        if (onTapPickImage != null) {
+                          onTapPickImage();
                         }
                       },
                       child: AspectRatio(
@@ -129,8 +117,8 @@ class _BottomActionWidgetState extends State<BottomActionWidget> {
         SizedBox(width: 10),
         FloatingActionButton(
           onPressed: () {
-            if (widget.onTapFab != null) {
-              widget.onTapFab();
+            if (onTapFab != null) {
+              onTapFab();
             }
           },
           backgroundColor: Colors.white,

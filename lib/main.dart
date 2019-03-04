@@ -18,7 +18,6 @@ import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/values.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
-import 'package:switch_decor/widget/color_parent.dart';
 import 'package:switch_decor/widget/drawing_parent.dart';
 
 void main() => runApp(MyApp());
@@ -270,23 +269,21 @@ class _MyHomePageState extends State<MyHomePage> {
               bottom: isIPhoneX(context)
                   ? MediaQuery.of(context).padding.bottom / 2
                   : 0),
-          child: ColorListParentWidget(
-            _colorSets,
-            _controller,
-            _selectedColorIndex,
-            child: BottomActionWidget(
-              onTapFab: () {
-                _renderToFile(c);
-              },
-              onTapPickImage: () {
-                _pickImage(c);
-              },
-              onTapColor: (index) {
-                setState(() {
-                  _selectedColorIndex = index;
-                });
-              },
-            ),
+          child: BottomActionWidget(
+            onTapFab: () {
+              _renderToFile(c);
+            },
+            onTapPickImage: () {
+              _pickImage(c);
+            },
+            onTapColor: (index) {
+              setState(() {
+                _selectedColorIndex = index;
+              });
+            },
+            selectedIndex: _selectedColorIndex,
+            colorSets: _colorSets,
+            scrollController: _controller,
           ),
         );
       }),

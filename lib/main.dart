@@ -16,7 +16,6 @@ import 'package:switch_decor/string.dart';
 import 'package:switch_decor/util/color.dart';
 import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/values.dart';
-import 'package:switch_decor/widget/AnimatableBackground.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 

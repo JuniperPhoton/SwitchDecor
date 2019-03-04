@@ -18,7 +18,6 @@ import 'package:switch_decor/util/drawing.dart';
 import 'package:switch_decor/values.dart';
 import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
-import 'package:switch_decor/widget/drawing_parent.dart';
 
 void main() => runApp(MyApp());
 
@@ -239,9 +238,11 @@ class _MyHomePageState extends State<MyHomePage> {
             height: Size.infinite.height,
             child: Container(
               margin: EdgeInsets.only(left: leftBannerWidth),
-              child: DrawingParentWidget(
-                  _contentImage, _frameImage, _darkTextColor,
-                  child: DrawingView()),
+              child: DrawingView(
+                contentImage: _contentImage,
+                frameImage: _frameImage,
+                darkTextColor: _darkTextColor,
+              ),
             ),
           ),
           SafeArea(

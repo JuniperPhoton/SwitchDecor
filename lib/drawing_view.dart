@@ -1,20 +1,16 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:switch_decor/drawing/painter.dart';
-import 'package:switch_decor/widget/drawing_parent.dart';
 
-class DrawingView extends StatefulWidget {
-  @override
-  _DrawingViewState createState() => _DrawingViewState();
-}
+class DrawingView extends StatelessWidget {
+  final ui.Image frameImage;
+  final ui.Image contentImage;
+  final bool darkTextColor;
 
-class _DrawingViewState extends State<DrawingView> {
+  DrawingView({this.frameImage, this.contentImage, this.darkTextColor});
+
   @override
   Widget build(BuildContext context) {
-    var parent = DrawingParentWidget.of(context);
-    var contentImage = parent.contentImage;
-    var frameImage = parent.frameImage;
-    var darkTextColor = parent.darkTextColor;
-
     return CustomPaint(
         painter: new CanvasPainter(
             frameImage: frameImage,

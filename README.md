@@ -18,6 +18,10 @@ This project is still **under construction**, here is the features checklist:
 * [ ] Draw an icon.
 * [ ] Change a name?
 
+## Privacy
+
+Though you can see this app needs the camera permission, which is needed in image_picker plugin, this app will not open the camera and do futher data collecting.
+
 ## MIT License
 
 Copyright (c) [2019] [JuniperPhoton]

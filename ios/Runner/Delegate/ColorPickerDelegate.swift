@@ -11,7 +11,7 @@ import Foundation
 class ColorPickerDelegate {
     func registerColorPickerChannel(_ binaryMessenger: FlutterBinaryMessenger) {
         let colorChannel = FlutterMethodChannel(name: "ColorPicker", binaryMessenger: binaryMessenger)
-        colorChannel.setMethodCallHandler { (call, result) in
+        colorChannel.setMethodCallHandler { (call: FlutterMethodCall, result: @escaping FlutterResult) in
             var set = Set<Int>()
 
             guard let uriString = call.getArgument(name: "uri") else {
@@ -29,25 +29,25 @@ class ColorPickerDelegate {
                 return
             }
 
-            let colors = image.getColors()
+            image.getColors() { (colors) in
+                if let primary = colors.primary?.cgColor {
+                    self.addColor(&set, primary.getHexInt())
+                }
 
-            if let primary = colors.primary?.cgColor {
-                self.addColor(&set, primary.getHexIntFromCIColor())
+                if let secondary = colors.secondary?.cgColor {
+                    self.addColor(&set, secondary.getHexInt())
+                }
+
+                if let detail = colors.detail?.cgColor {
+                    self.addColor(&set, detail.getHexInt())
+                }
+
+                if let background = colors.background?.cgColor {
+                    self.addColor(&set, background.getHexInt())
+                }
+
+                result(Array(set))
             }
-
-            if let secondary = colors.secondary?.cgColor {
-                self.addColor(&set, secondary.getHexIntFromCIColor())
-            }
-
-            if let detail = colors.detail?.cgColor {
-                self.addColor(&set, detail.getHexIntFromCIColor())
-            }
-
-            if let background = colors.background?.cgColor {
-                self.addColor(&set, background.getHexIntFromCIColor())
-            }
-
-            result(Array(set))
         }
     }
 

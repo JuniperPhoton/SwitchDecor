@@ -15,7 +15,7 @@ extension FlutterMethodCall {
 }
 
 extension CGColor {
-    func getHexIntFromCIColor() -> Int {
+    func getHexInt() -> Int {
         let r = lroundf(Float(components![0]) * 255)
         let g = lroundf(Float(components![1]) * 255)
         let b = lroundf(Float(components![2]) * 255)

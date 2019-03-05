@@ -60,8 +60,10 @@ class AboutDrawer extends StatelessWidget {
   }
 
   _sendEmail() async {
-    return _launchUrl(
-        "mailto:dengweichao@hotmail.com?subject=SwitchDecor%20Build%20${await _getBuildNumber()}%20feedback");
+    var uri =
+        "mailto:dengweichao@hotmail.com?subject=SwitchDecor ${await _getBuildNumber()} feedback";
+    var encoded = Uri.encodeFull(uri);
+    return _launchUrl(encoded);
   }
 
   _openGitHub() async {

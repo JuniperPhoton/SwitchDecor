@@ -13,7 +13,7 @@ import io.flutter.plugins.GeneratedPluginRegistrant
 class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
     companion object {
         private const val TAG = "MainActivity"
-        private const val REQUEST_PERMISSION_CODE = 0
+        private const val REQUEST_PERMISSION_CODE = 10010
     }
 
     private var dirChannelDelegate = DirProviderDelegate(this)
@@ -41,6 +41,8 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
             } else {
                 dirChannelDelegate.setResult(null)
             }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 }

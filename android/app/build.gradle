@@ -61,13 +61,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-
-            android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "switch_decor.${defaultConfig.versionName}" +
-                            ".${defaultConfig.versionCode}.apk"
-                }
-            }
         }
     }
 }

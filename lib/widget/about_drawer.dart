@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:switch_decor/res/string.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
-
-const githubUrl = "https://github.com/JuniperPhoton/SwitchDecor";
-const twitterUrl = "https://twitter.com/JuniperPhoton";
-const weiboUrl = "https://weibo.com/p/1005051624312593";
 
 class AboutDrawer extends StatelessWidget {
   final Color _color;
@@ -61,7 +58,7 @@ class AboutDrawer extends StatelessWidget {
 
   _sendEmail() async {
     var uri =
-        "mailto:dengweichao@hotmail.com?subject=SwitchDecor ${await _getBuildNumber()} feedback";
+        "mailto:$myEmail?subject=$appName ${await _getBuildNumber()} feedback";
     var encoded = Uri.encodeFull(uri);
     return _launchUrl(encoded);
   }
@@ -99,7 +96,7 @@ class AboutDrawer extends StatelessWidget {
             children: <Widget>[
               _createVerticalSpace(),
               Text(
-                "SwitchDecor",
+                appName,
                 style: _titleStyle,
               ),
               Container(
@@ -109,7 +106,7 @@ class AboutDrawer extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4)),
                 padding: EdgeInsets.all(4),
                 child: Text(
-                  "for Android and iOS",
+                  appPlatform,
                   style: _contentStyle,
                 ),
               ),
@@ -134,32 +131,31 @@ class AboutDrawer extends StatelessWidget {
               ),
               _createVerticalSpace(),
               Text(
-                "CREDIT",
+                creditTitle,
                 style: _subTitleStyle,
               ),
               _createVerticalSpace(),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "This project is written in Flutter, which is a open-source project that"
-                      " allows you to build beautiful native apps on iOS and Android from a single codebase.",
+                  appDesc,
                   style: _contentStyle,
                   textAlign: TextAlign.center,
                 ),
               ),
               _createVerticalSpace(),
               Text(
-                "DEVELOPER",
+                developerTitle,
                 style: _subTitleStyle,
               ),
               _createVerticalSpace(),
               Text(
-                "JuniperPhoton",
+                myName,
                 style: _contentStyle,
               ),
               _createVerticalSpace(),
               Text(
-                "FEEDBACK",
+                feedbackTitle,
                 style: _subTitleStyle,
               ),
               Container(

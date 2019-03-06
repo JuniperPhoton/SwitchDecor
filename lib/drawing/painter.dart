@@ -18,12 +18,15 @@ class CanvasPainter extends CustomPainter {
   ColorSet colorSet;
   bool darkTextColor = false;
 
+  FilterQuality filterQuality;
+
   CanvasPainter(
       {this.frameImage,
       this.contentImage,
       this.matrix,
       this.colorSet,
-      this.darkTextColor = false});
+      this.darkTextColor = false,
+      this.filterQuality = FilterQuality.none});
 
   final _paint = Paint();
   final _framePaint = Paint();
@@ -103,6 +106,8 @@ class CanvasPainter extends CustomPainter {
             frameRect.top + topRatio * frameRect.height,
             frameRect.left + rightRatio * frameRect.width,
             frameRect.top + bottomRatio * frameRect.height);
+
+        _contentPaint.filterQuality = filterQuality;
 
         canvas.drawImageRect(contentImage, _getRectFromImage(contentImage),
             contentRect, _contentPaint);

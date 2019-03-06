@@ -14,7 +14,8 @@ Future<Image> getRendered(Image frameImage, Image contentImage,
       frameImage: frameImage,
       contentImage: contentImage,
       colorSet: colorSet,
-      darkTextColor: darkTextColor);
+      darkTextColor: darkTextColor,
+      filterQuality: FilterQuality.high);
   var size = Size(frameImage.width.toDouble(), frameImage.height.toDouble());
   painter.paint(canvas, size);
   return recorder

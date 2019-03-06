@@ -86,7 +86,7 @@ class _MainViewState extends State<MainView>
       print("Retrieved file to save: $path");
       var file = File(path);
 
-      file = await _saveImage(file.path);
+      file = await _doRenderToFile(file.path);
       saveResult = file != null;
       print("File saved: $file");
     } else {
@@ -103,7 +103,7 @@ class _MainViewState extends State<MainView>
             Platform.isAndroid ? await _createActionToLaunchFile(path) : null);
   }
 
-  Future<File> _saveImage(String path) async {
+  Future<File> _doRenderToFile(String path) async {
     try {
       var image = await getRendered(
           _frameImage, _contentImage, _currentColorSet, _darkTextColor);

@@ -14,7 +14,8 @@ This project is still **under construction**, and here is the features checklist
 * [x] ~~Fix weird composing issue on iPhone~~
 * [x] ~~Support extracting primary color from images~~
 * [x] ~~Animate on color changes~~
-* [ ] Add a progress bar on decoding or composing image.
+* [x] ~~Add a progress bar on decoding or composing image.~~
+* [x] ~~Output high-res image.~~
 * [ ] Draw a new icon.
 
 ## Privacy

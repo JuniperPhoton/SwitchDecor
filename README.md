@@ -4,7 +4,7 @@ An app to help you adding frame to your favorite screenshots from Nintendo Switc
 
 This project is written in Flutter, supporting both iOS and Android platform.
 
-![](./design/output.jpg)
+![](./design/prom.jpg)
 
 ## Progress
 

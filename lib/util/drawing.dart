@@ -20,7 +20,8 @@ Future<Image> getRendered(Image frameImage, Image contentImage,
 
   print("======output size: $outputWidth, $outputHeight");
 
-  var size = Size(outputWidth, outputHeight);
+  // Square at my will.
+  var size = Size(outputWidth, outputWidth);
 
   painter.paint(canvas, size);
   return recorder

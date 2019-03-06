@@ -2,7 +2,11 @@ package com.juniperphoton.switchdecor
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.view.View.*
+import android.view.WindowManager
+import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.core.app.ActivityCompat
 import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
 import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
@@ -22,6 +26,13 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val lp = window.attributes
+            lp.layoutInDisplayCutoutMode = LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+            window.attributes = lp
+        }
+
         GeneratedPluginRegistrant.registerWith(this)
         dirChannelDelegate.register(flutterView)
         colorPickerDelegate.register(flutterView)

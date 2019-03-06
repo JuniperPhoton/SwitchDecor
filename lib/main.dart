@@ -45,6 +45,8 @@ class _MainViewState extends State<MainView>
   ui.Image _contentImage;
   ui.Image _frameImage;
 
+  bool _isLoading = false;
+
   int _selectedColorIndex = 0;
 
   final List<ColorSet> _colorSets = generateDefaultColorSets();
@@ -76,7 +78,11 @@ class _MainViewState extends State<MainView>
         });
   }
 
-  _renderToFile(BuildContext context) async {
+  _render(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+
     var saveResult = false;
 
     var path = await DirProvider.getFileToSave(
@@ -86,7 +92,7 @@ class _MainViewState extends State<MainView>
       print("Retrieved file to save: $path");
       var file = File(path);
 
-      file = await _doRenderToFile(file.path);
+      file = await _renderToFile(file.path);
       saveResult = file != null;
       print("File saved: $file");
     } else {
@@ -101,9 +107,13 @@ class _MainViewState extends State<MainView>
     _notify(context, text,
         action:
             Platform.isAndroid ? await _createActionToLaunchFile(path) : null);
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
-  Future<File> _doRenderToFile(String path) async {
+  Future<File> _renderToFile(String path) async {
     try {
       var image = await getRendered(
           _frameImage, _contentImage, _currentColorSet, _darkTextColor);
@@ -129,7 +139,8 @@ class _MainViewState extends State<MainView>
 
     if (list.isNotEmpty) {
       _controller?.animateTo(0,
-          duration: Duration(milliseconds: scrollDurationMs), curve: Curves.ease);
+          duration: Duration(milliseconds: scrollDurationMs),
+          curve: Curves.ease);
 
       _colorSets.clear();
       _colorSets.addAll(list);
@@ -156,7 +167,8 @@ class _MainViewState extends State<MainView>
 
     var image = await decodeImageFromList(bytes);
     if (image != null) {
-      print("=====file decoded====, width: ${image.width}, height: ${image.height}");
+      print(
+          "=====file decoded====, width: ${image.width}, height: ${image.height}");
       setState(() {
         _contentImage = image;
       });
@@ -195,8 +207,7 @@ class _MainViewState extends State<MainView>
             end: nextColorSet.backgroundColor)
         .animate(_animationController)
           ..addListener(() {
-            setState(() {
-            });
+            setState(() {});
           });
     _animationController.forward(from: 0);
     _selectedColorIndex = index;
@@ -303,19 +314,19 @@ class _MainViewState extends State<MainView>
                   ? MediaQuery.of(context).padding.bottom / 2
                   : 0),
           child: BottomActionWidget(
-            onTapFab: () {
-              _renderToFile(c);
-            },
-            onTapPickImage: () {
-              _pickImage(c);
-            },
-            onTapColor: (index) {
-              _onTapColor(index);
-            },
-            selectedIndex: _selectedColorIndex,
-            colorSets: _colorSets,
-            scrollController: _controller,
-          ),
+              onTapFab: () {
+                _render(c);
+              },
+              onTapPickImage: () {
+                _pickImage(c);
+              },
+              onTapColor: (index) {
+                _onTapColor(index);
+              },
+              selectedIndex: _selectedColorIndex,
+              colorSets: _colorSets,
+              scrollController: _controller,
+              isLoading: _isLoading),
         );
       }),
     );

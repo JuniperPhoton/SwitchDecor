@@ -23,3 +23,6 @@ const double aboutIconContainerSize = 70;
 
 const double outputWidth = 2523;
 const double outputHeight = 1437;
+
+const double progressBarSize = 20;
+const double progressBarStrokeWidth = 2;

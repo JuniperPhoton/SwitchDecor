@@ -13,6 +13,7 @@ class BottomActionWidget extends StatelessWidget {
   final ScrollController scrollController;
   final List<ColorSet> colorSets;
   final int selectedIndex;
+  final bool isLoading;
 
   const BottomActionWidget(
       {this.onTapFab,
@@ -20,7 +21,35 @@ class BottomActionWidget extends StatelessWidget {
       this.onTapColor,
       this.scrollController,
       this.colorSets,
-      this.selectedIndex});
+      this.selectedIndex,
+      this.isLoading});
+
+  Widget _buildFab() {
+    if (!isLoading) {
+      return FloatingActionButton(
+        onPressed: () {
+          if (onTapFab != null) {
+            onTapFab();
+          }
+        },
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        child: Icon(Icons.check),
+      );
+    } else {
+      return FloatingActionButton(
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        child: Container(
+            width: progressBarSize,
+            height: progressBarSize,
+            child: CircularProgressIndicator(
+              valueColor: const AlwaysStoppedAnimation<Color>(Colors.black),
+              strokeWidth: progressBarStrokeWidth,
+            )),
+      );
+    }
+  }
 
   Widget _buildListItem(BuildContext context, int index) {
     var set = colorSets[index];
@@ -29,7 +58,7 @@ class BottomActionWidget extends StatelessWidget {
       height: bottomActionBarHeight,
       child: InkResponse(
         onTap: () {
-          if (onTapColor != null) {
+          if (onTapColor != null && !isLoading) {
             onTapColor(index);
           }
         },
@@ -91,7 +120,7 @@ class BottomActionWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
-                        if (onTapPickImage != null) {
+                        if (onTapPickImage != null && !isLoading) {
                           onTapPickImage();
                         }
                       },
@@ -115,16 +144,7 @@ class BottomActionWidget extends StatelessWidget {
           ),
         ),
         SizedBox(width: 10),
-        FloatingActionButton(
-          onPressed: () {
-            if (onTapFab != null) {
-              onTapFab();
-            }
-          },
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          child: Icon(Icons.check),
-        )
+        _buildFab()
       ],
     );
   }

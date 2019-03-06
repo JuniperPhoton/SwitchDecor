@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:switch_decor/drawing/painter.dart';
 import 'package:switch_decor/model/color_set.dart';
+import 'package:switch_decor/res/dimensions.dart';
 
 /// Draw [contentImage] into [frameImage] and return an [Image].
 ///
@@ -16,7 +17,11 @@ Future<Image> getRendered(Image frameImage, Image contentImage,
       colorSet: colorSet,
       darkTextColor: darkTextColor,
       filterQuality: FilterQuality.high);
-  var size = Size(frameImage.width.toDouble(), frameImage.height.toDouble());
+
+  print("======output size: $outputWidth, $outputHeight");
+
+  var size = Size(outputWidth, outputHeight);
+
   painter.paint(canvas, size);
   return recorder
       .endRecording()

@@ -20,3 +20,6 @@ const double bottomActionBarColorCircleBorderWidth = 3.0;
 
 const double aboutIconSize = 30;
 const double aboutIconContainerSize = 70;
+
+const double outputWidth = 2523;
+const double outputHeight = 1437;

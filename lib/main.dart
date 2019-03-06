@@ -156,7 +156,7 @@ class _MainViewState extends State<MainView>
 
     var image = await decodeImageFromList(bytes);
     if (image != null) {
-      print("=====file decoded====");
+      print("=====file decoded====, width: ${image.width}, height: ${image.height}");
       setState(() {
         _contentImage = image;
       });

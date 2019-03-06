@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
+import 'package:switch_decor/util/build.dart';
 
 class CanvasPainter extends CustomPainter {
   static const TINT_FRAME = false;
@@ -92,6 +93,8 @@ class CanvasPainter extends CustomPainter {
             ColorFilter.mode(Colors.black, BlendMode.srcIn);
       }
 
+      _framePaint.filterQuality = filterQuality;
+
       canvas.drawImageRect(
           frameImage, _getRectFromImage(frameImage), frameRect, _framePaint);
 
@@ -109,8 +112,14 @@ class CanvasPainter extends CustomPainter {
 
         _contentPaint.filterQuality = filterQuality;
 
-        canvas.drawImageRect(contentImage, _getRectFromImage(contentImage),
-            contentRect, _contentPaint);
+        var src = _getRectFromImage(contentImage);
+
+        if (isDebug() && filterQuality == FilterQuality.high) {
+          print("========output src content rect: $src, frameRect: $frameRect");
+          print("========output dst content rect: $contentRect");
+        }
+
+        canvas.drawImageRect(contentImage, src, contentRect, _contentPaint);
       }
     }
   }

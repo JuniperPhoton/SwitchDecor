@@ -4,9 +4,9 @@ An app to help you adding frame to your favorite screenshots from Nintendo Switc
 
 This project is written in Flutter, supporting both iOS and Android platform.
 
-Visit the [official website](https://juniperphoton.net/switchdecor/) to download the pre-release apk.
+Visit the [official website](https://juniperphoton.net/switchdecor/) to download the pre-release apk, or download the open beta in [Google Play Store](https://play.google.com/store/apps/details?id=com.juniperphoton.switchdecor).
 
-**It's comming to Google Play beta test and Testflight in App Store.**
+**It's coming to TestFlight in App Store.**
 
 ![](./design/prom.jpg)
 

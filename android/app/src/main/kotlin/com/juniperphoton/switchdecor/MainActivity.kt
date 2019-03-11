@@ -1,16 +1,17 @@
 package com.juniperphoton.switchdecor
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.View.*
-import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.core.app.ActivityCompat
 import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
 import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
 import com.juniperphoton.switchdecor.plugins.LauncherDelegate
+import com.juniperphoton.switchdecor.plugins.ShareFromNativeDelegate
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 
@@ -23,6 +24,7 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
     private var dirChannelDelegate = DirProviderDelegate(this)
     private var colorPickerDelegate = ColorPickerDelegate(this)
     private var launcherDelegate = LauncherDelegate(this)
+    private var shareFromNativeDelegate = ShareFromNativeDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +36,27 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
         }
 
         GeneratedPluginRegistrant.registerWith(this)
+
         dirChannelDelegate.register(flutterView)
         colorPickerDelegate.register(flutterView)
         launcherDelegate.register(flutterView)
+        shareFromNativeDelegate.register(flutterView)
+
+        intent?.let {
+            handleIntent(it)
+        }
+    }
+
+    override fun onStop() {
+        shareFromNativeDelegate.cleanUp()
+        super.onStop()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let {
+            handleIntent(it)
+        }
     }
 
     override fun requestPermissions() {
@@ -55,5 +75,10 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
+    }
+
+    private fun handleIntent(intent: Intent) {
+        val data = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM) ?: return
+        shareFromNativeDelegate.handleUri(data)
     }
 }

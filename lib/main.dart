@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:switch_decor/platform/share_from_native.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/widget/drawing_view.dart';
 import 'package:switch_decor/model/color_set.dart';
@@ -39,7 +40,8 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin
+    implements ShareFromNativeCallback {
   ScrollController _controller;
 
   ui.Image _contentImage;
@@ -57,6 +59,8 @@ class _MainViewState extends State<MainView>
 
   AnimationController _animationController;
   Animation<Color> _colorAnimation;
+
+  final _shareFromNative = ShareFromNativeChannel();
 
   /// Notify user by showing snacking bar.
   /// Apply [action] if you needed.
@@ -156,6 +160,10 @@ class _MainViewState extends State<MainView>
       return;
     }
 
+    _onPickedFile(file);
+  }
+
+  _onPickedFile(File file) async {
     print("file picked: ${file.path}");
 
     var bytes = await file.readAsBytes();
@@ -221,6 +229,8 @@ class _MainViewState extends State<MainView>
     _animationController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: colorAnimationDurationMs));
+
+    _shareFromNative.register(this);
   }
 
   @override
@@ -330,5 +340,46 @@ class _MainViewState extends State<MainView>
         );
       }),
     );
+  }
+
+  @override
+  void onPickFile(File file) {
+    _onPickedFile(file);
+  }
+
+  @override
+  void toggleDialog(bool show) async {
+    if (show) {
+      await showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (c) {
+            return Material(
+              type: MaterialType.transparency,
+              child: Center(
+                child: Container(
+                  child:
+                      Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+                    CircularProgressIndicator(
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 12),
+                      child: Text(
+                        loading,
+                        style: TextStyle(color: Colors.white, fontSize: 12),
+                      ),
+                    )
+                  ]),
+                ),
+              ),
+            );
+          });
+    } else {
+      Navigator.popUntil(context, (r) {
+        return !(r is PopupRoute);
+      });
+    }
   }
 }

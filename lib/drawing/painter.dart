@@ -88,9 +88,9 @@ class CanvasPainter extends CustomPainter {
       if (TINT_FRAME && colorSet != null) {
         _framePaint.colorFilter =
             ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
-      } else if (darkTextColor && TINT_FRAME_ON_DARK_TEXT) {
+      } else if (colorSet?.tintColor != null) {
         _framePaint.colorFilter =
-            ColorFilter.mode(Colors.black, BlendMode.srcIn);
+            ColorFilter.mode(colorSet.tintColor, BlendMode.srcIn);
       }
 
       _framePaint.filterQuality = filterQuality;

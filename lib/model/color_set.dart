@@ -1,14 +1,28 @@
 import 'dart:ui';
 
 class ColorSet {
+  Color tintColor;
   Color foregroundColor;
   Color backgroundColor;
 
-  ColorSet({this.backgroundColor, this.foregroundColor});
+  ColorSet(
+      {this.backgroundColor, this.foregroundColor, this.tintColor}) {
+    if (tintColor == null) {
+      tintColor = foregroundColor;
+    }
+  }
 }
 
 List<ColorSet> generateDefaultColorSets() {
   return [
+    ColorSet(
+        backgroundColor: Color(0x00000000),
+        foregroundColor: Color(0xff000000),
+        tintColor: Color(0xffffffff)),
+    ColorSet(
+        backgroundColor: Color(0x00000000),
+        foregroundColor: Color(0xff000000),
+        tintColor: Color(0xff000000)),
     ColorSet(
         backgroundColor: Color(0xff54bddb), foregroundColor: Color(0xff3b8499)),
     ColorSet(

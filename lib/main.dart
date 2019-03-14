@@ -47,7 +47,7 @@ class _MainViewState extends State<MainView>
 
   bool _isLoading = false;
 
-  int _selectedColorIndex = 0;
+  int _selectedColorIndex = 1;
 
   final List<ColorSet> _colorSets = generateDefaultColorSets();
 

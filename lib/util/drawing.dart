@@ -1,5 +1,6 @@
-import 'dart:ui';
+import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:switch_decor/drawing/painter.dart';
 import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/res/dimensions.dart';
@@ -7,14 +8,16 @@ import 'package:switch_decor/res/dimensions.dart';
 /// Draw [contentImage] into [frameImage] and return an [Image].
 ///
 /// return a future to be await.
-Future<Image> getRendered(Image frameImage, Image contentImage,
+Future<ui.Image> getRendered(ui.Image frameImage, ui.Image contentImage,
     ColorSet colorSet, bool darkTextColor) {
-  var recorder = PictureRecorder();
+  var copiedColorSet = ColorSet(
+      backgroundColor: colorSet.backgroundColor, foregroundColor: Colors.white);
+  var recorder = ui.PictureRecorder();
   var canvas = Canvas(recorder);
   var painter = CanvasPainter(
       frameImage: frameImage,
       contentImage: contentImage,
-      colorSet: colorSet,
+      colorSet: copiedColorSet,
       darkTextColor: darkTextColor,
       filterQuality: FilterQuality.high);
 

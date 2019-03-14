@@ -53,6 +53,16 @@ class BottomActionWidget extends StatelessWidget {
 
   Widget _buildListItem(BuildContext context, int index) {
     var set = colorSets[index];
+
+    final shouldPaintTransparent = set.backgroundColor == Colors.transparent;
+
+    var imagePath;
+    if (shouldPaintTransparent) {
+      imagePath = set.tintColor == Colors.white
+          ? "assets/images/transparent.png"
+          : "assets/images/transparent_d.png";
+    }
+
     return Container(
       width: bottomActionBarColorButtonWidth,
       height: bottomActionBarHeight,
@@ -80,6 +90,11 @@ class BottomActionWidget extends StatelessWidget {
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: set.backgroundColor,
+                image: shouldPaintTransparent
+                    ? DecorationImage(
+                        image:
+                            Image.asset(imagePath).image)
+                    : null,
                 border: Border.all(
                     color: set.foregroundColor,
                     width: bottomActionBarColorCircleBorderWidth)),

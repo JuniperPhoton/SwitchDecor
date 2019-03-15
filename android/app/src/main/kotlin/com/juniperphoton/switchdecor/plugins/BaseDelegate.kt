@@ -9,9 +9,15 @@ import io.flutter.plugin.common.MethodChannel
 abstract class BaseDelegate : MethodChannel.MethodCallHandler {
     abstract val channelName: String
 
+    private lateinit var channel: MethodChannel
+
     fun register(messenger: BinaryMessenger) {
-        MethodChannel(messenger, channelName).setMethodCallHandler(this)
+        channel = MethodChannel(messenger, channelName)
+        channel.setMethodCallHandler(this)
+        onRegistered(channel)
     }
+
+    open fun onRegistered(channel: MethodChannel) = Unit
 
     @CallSuper
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {

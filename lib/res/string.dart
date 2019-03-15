@@ -18,3 +18,5 @@ const fontFamily = "FiraCode";
 const githubUrl = "https://github.com/JuniperPhoton/SwitchDecor";
 const twitterUrl = "https://twitter.com/JuniperPhoton";
 const weiboUrl = "https://weibo.com/p/1005051624312593";
+
+const loading = "LOADING...";

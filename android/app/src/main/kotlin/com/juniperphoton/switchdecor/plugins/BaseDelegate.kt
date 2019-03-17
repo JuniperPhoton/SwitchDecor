@@ -1,9 +1,9 @@
 package com.juniperphoton.switchdecor.plugins
 
 import androidx.annotation.CallSuper
+import com.juniperphoton.switchdecor.utils.Pasteur
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
-import android.util.Log
 import io.flutter.plugin.common.MethodChannel
 
 abstract class BaseDelegate : MethodChannel.MethodCallHandler {
@@ -21,6 +21,6 @@ abstract class BaseDelegate : MethodChannel.MethodCallHandler {
 
     @CallSuper
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
-        Log.i(channelName, "Perform method call. Name is ${call.method}")
+        Pasteur.info(channelName, "Perform method call. Name is ${call.method}")
     }
 }

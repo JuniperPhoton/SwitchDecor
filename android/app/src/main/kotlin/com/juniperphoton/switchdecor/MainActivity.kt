@@ -6,13 +6,13 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.core.app.ActivityCompat
 import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
 import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
 import com.juniperphoton.switchdecor.plugins.LauncherDelegate
 import com.juniperphoton.switchdecor.plugins.ShareFromNativeDelegate
+import com.juniperphoton.switchdecor.utils.Pasteur
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 
@@ -79,7 +79,7 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
     }
 
     private fun handleIntent(intent: Intent) {
-        Log.i(TAG, "handle intent: $intent")
+        Pasteur.info(TAG, "handle intent: $intent")
         val data = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM) ?: return
         shareFromNativeDelegate.handleUri(data)
     }

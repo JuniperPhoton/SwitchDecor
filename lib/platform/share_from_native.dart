@@ -28,5 +28,10 @@ class ShareFromNativeChannel {
         callback?.toggleDialog(show);
       }
     });
+    _methodChannel.invokeMethod("register", null);
+  }
+
+  unregister() {
+    _methodChannel.invokeMethod("unregister", null);
   }
 }

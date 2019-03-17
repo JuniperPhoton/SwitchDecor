@@ -12,6 +12,9 @@ const double frameTopRatio = 221;
 const double frameRightRatio = 1144;
 const double frameBottomRatio = 650;
 
+const double frameAspectRatio = (frameRightRatio - frameLeftRatio) /
+    (frameBottomRatio - frameTopRatio);
+
 const double bottomActionBarHeight = 60.0;
 const double bottomActionBarCornerRadius = 12.0;
 const double bottomActionBarColorButtonWidth = 50.0;

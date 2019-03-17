@@ -60,8 +60,28 @@ class CanvasPainter extends CustomPainter {
     return Rect.fromLTWH(left, top, targetWidth, targetHeight);
   }
 
-  _getRectFromImage(ui.Image image) {
-    return Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
+  _getRectFromImage(ui.Image image, {double ratio = 0.0}) {
+    final imageWidth = image.width.toDouble();
+    final imageHeight = image.height.toDouble();
+
+    if (ratio == 0) {
+      return Rect.fromLTWH(0, 0, imageWidth, imageHeight);
+    } else {
+      final imageRatio = imageWidth / imageHeight;
+      double targetWidth;
+      double targetHeight;
+      if (imageRatio >= ratio) {
+        targetHeight = imageHeight;
+        targetWidth = targetHeight * ratio;
+      } else {
+        targetWidth = imageWidth;
+        targetHeight = targetWidth / ratio;
+      }
+
+      final left = (imageWidth - targetWidth) / 2;
+      final top = (imageHeight - targetHeight) / 2;
+      return Rect.fromLTWH(left, top, targetWidth, targetHeight);
+    }
   }
 
   @override
@@ -74,17 +94,21 @@ class CanvasPainter extends CustomPainter {
 
     matrix?.copyIntoArray(_list);
 
+    // Draw the background color
     if (colorSet != null) {
       canvas.drawColor(colorSet.backgroundColor, BlendMode.src);
     }
 
+    // Transform canvas if needed.
     if (_list != null) {
       canvas.transform(_list);
     }
 
+    // Draw the frame image on top of background.
     if (frameImage != null) {
       var frameRect = _getDstRect(frameImage.width, frameImage.height, size);
 
+      // Tint if needed.
       if (TINT_FRAME && colorSet != null) {
         _framePaint.colorFilter =
             ColorFilter.mode(colorSet.foregroundColor, BlendMode.srcIn);
@@ -98,6 +122,7 @@ class CanvasPainter extends CustomPainter {
       canvas.drawImageRect(
           frameImage, _getRectFromImage(frameImage), frameRect, _framePaint);
 
+      // Draw the user content image
       if (contentImage != null) {
         var leftRatio = frameLeftRatio / frameImage.width;
         var topRatio = frameTopRatio / frameImage.height;
@@ -112,7 +137,7 @@ class CanvasPainter extends CustomPainter {
 
         _contentPaint.filterQuality = filterQuality;
 
-        var src = _getRectFromImage(contentImage);
+        var src = _getRectFromImage(contentImage, ratio: frameAspectRatio);
 
         if (isDebug() && filterQuality == FilterQuality.high) {
           print("========output src content rect: $src, frameRect: $frameRect");

@@ -7,7 +7,7 @@ import com.juniperphoton.switchdecor.utils.FileUriProcessor
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
 
-class ShareFromNativeDelegate(private val context: Context) : BaseDelegate() {
+class ShareFromNativeDelegate(private val context: Context) : TwoWayDelegate() {
     companion object {
         private const val NAME = "ShareFromNative"
         private const val TIMEOUT_MS = 300L
@@ -20,12 +20,25 @@ class ShareFromNativeDelegate(private val context: Context) : BaseDelegate() {
     private var channel: MethodChannel? = null
     private var job: Job? = null
 
+    private var uri: Uri? = null
+
     override fun onRegistered(channel: MethodChannel) {
         this.channel = channel
     }
 
+    override fun doOnRegister() {
+        uri?.let {
+            handleUri(it)
+        }
+    }
+
     @UiThread
     fun handleUri(uri: Uri) {
+        if (!registered) {
+            this.uri = uri
+            return
+        }
+
         job = GlobalScope.launch(Dispatchers.IO) {
             runAtLeastTime(TIMEOUT_MS) {
                 val output: String? = readPathFromUriInternal(uri) ?: return@runAtLeastTime

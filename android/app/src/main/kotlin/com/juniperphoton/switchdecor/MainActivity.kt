@@ -12,6 +12,7 @@ import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
 import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
 import com.juniperphoton.switchdecor.plugins.LauncherDelegate
 import com.juniperphoton.switchdecor.plugins.ShareFromNativeDelegate
+import com.juniperphoton.switchdecor.utils.Pasteur
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 
@@ -78,6 +79,7 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
     }
 
     private fun handleIntent(intent: Intent) {
+        Pasteur.info(TAG, "handle intent: $intent")
         val data = intent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM) ?: return
         shareFromNativeDelegate.handleUri(data)
     }

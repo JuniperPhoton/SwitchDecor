@@ -3,29 +3,29 @@ package com.juniperphoton.switchdecor
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 import androidx.core.app.ActivityCompat
-import com.juniperphoton.switchdecor.plugins.ColorPickerDelegate
-import com.juniperphoton.switchdecor.plugins.DirProviderDelegate
-import com.juniperphoton.switchdecor.plugins.LauncherDelegate
-import com.juniperphoton.switchdecor.plugins.ShareFromNativeDelegate
+import com.juniperphoton.switchdecor.plugins.*
 import com.juniperphoton.switchdecor.utils.Pasteur
 import io.flutter.app.FlutterActivity
 import io.flutter.plugins.GeneratedPluginRegistrant
 
-class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
+class MainActivity : FlutterActivity(), DirProviderDelegate.Callback, WindowFeatureDelegate.Callback {
     companion object {
         private const val TAG = "MainActivity"
         private const val REQUEST_PERMISSION_CODE = 10010
     }
 
-    private var dirChannelDelegate = DirProviderDelegate(this)
-    private var colorPickerDelegate = ColorPickerDelegate(this)
-    private var launcherDelegate = LauncherDelegate(this)
-    private var shareFromNativeDelegate = ShareFromNativeDelegate(this)
+    private val dirChannelDelegate = DirProviderDelegate(this)
+    private val colorPickerDelegate = ColorPickerDelegate(this)
+    private val launcherDelegate = LauncherDelegate(this)
+    private val shareFromNativeDelegate = ShareFromNativeDelegate(this)
+    private val windowFeatureDelegate = WindowFeatureDelegate(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,10 +38,15 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
 
         GeneratedPluginRegistrant.registerWith(this)
 
-        dirChannelDelegate.register(flutterView)
-        colorPickerDelegate.register(flutterView)
-        launcherDelegate.register(flutterView)
-        shareFromNativeDelegate.register(flutterView)
+        flutterView?.let {
+            dirChannelDelegate.register(it)
+            colorPickerDelegate.register(it)
+            launcherDelegate.register(it)
+            shareFromNativeDelegate.register(it)
+            windowFeatureDelegate.register(it)
+        }
+
+        onRequestNavigationColorChanged(Color.BLACK, false)
 
         intent?.let {
             handleIntent(it)
@@ -58,6 +63,18 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback {
         intent?.let {
             handleIntent(it)
         }
+    }
+
+    override fun onRequestNavigationColorChanged(color: Int, light: Boolean) {
+        window.navigationBarColor = color
+
+        var flag = window.decorView.systemUiVisibility
+        flag = if (light) {
+            flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        } else {
+            flag and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+        }
+        window.decorView.systemUiVisibility = flag
     }
 
     override fun requestPermissions() {

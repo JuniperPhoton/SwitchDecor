@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:switch_decor/platform/share_from_native.dart';
+import 'package:switch_decor/platform/window_feature.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/widget/drawing_view.dart';
 import 'package:switch_decor/model/color_set.dart';

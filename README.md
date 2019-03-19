@@ -10,8 +10,8 @@ Visit the [official website](https://juniperphoton.net/switchdecor/) to download
 
 Some features:
 
-- Pick your screeeshots from gallery;
-- Extracy primary colors from your screenshots;
+- Pick your screenshots from gallery;
+- Extract primary colors from your screenshots;
 - Select the background color to decorate your screenshots;
 - Save as high-res image to your album;
 

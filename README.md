@@ -28,10 +28,12 @@ This project is still **under construction**, and here is the features checklist
 * [x] ~~Add a progress bar on decoding or composing image.~~
 * [x] ~~Output high-res image.~~
 * [x] ~~Draw a new icon.~~
+* [ ] Support outputing transparent background
+* [ ] Support selecting background
 
 ## Privacy
 
-Though you can see this app needs the camera permission, which is needed in image_picker plugin, this app will not open the camera and do futher data collecting.
+Though you can see this app needs the camera permission, which is needed in image_picker plugin, this app will not open the camera and do further data collecting.
 
 ## MIT License
 

@@ -15,6 +15,10 @@ class BottomActionWidget extends StatelessWidget {
   final int selectedIndex;
   final bool isLoading;
 
+  final cardBorder = const RoundedRectangleBorder(
+      borderRadius:
+      BorderRadius.all(Radius.circular(bottomActionBarCornerRadius)));
+
   const BottomActionWidget(
       {this.onTapFab,
       this.onTapPickImage,
@@ -49,6 +53,19 @@ class BottomActionWidget extends StatelessWidget {
             )),
       );
     }
+  }
+
+  Widget _buildColorList(BuildContext context) {
+    return ListView.builder(
+      controller: scrollController,
+      physics: BouncingScrollPhysics(),
+      padding: EdgeInsets.only(left: 8, right: 60),
+      itemCount: colorSets.length,
+      itemBuilder: (c, i) {
+        return _buildListItem(context, i);
+      },
+      scrollDirection: Axis.horizontal,
+    );
   }
 
   Widget _buildListItem(BuildContext context, int index) {
@@ -89,6 +106,28 @@ class BottomActionWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildGallery() {
+    return GestureDetector(
+      onTap: () {
+        if (onTapPickImage != null && !isLoading) {
+          onTapPickImage();
+        }
+      },
+      child: AspectRatio(
+        aspectRatio: 4 / 3.0,
+        child: Container(
+            decoration: LeftBlurDecoration(),
+            child: Container(
+              margin: EdgeInsets.only(left: 12),
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.black,
+              ),
+            )),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -100,43 +139,15 @@ class BottomActionWidget extends StatelessWidget {
             margin: EdgeInsets.only(left: 45),
             child: Card(
               elevation: 6,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                      Radius.circular(bottomActionBarCornerRadius))),
+              shape: cardBorder,
               color: Colors.white,
               child: Stack(
                 children: <Widget>[
-                  ListView.builder(
-                    controller: scrollController,
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.only(left: 8, right: 60),
-                    itemCount: colorSets.length,
-                    itemBuilder: (c, i) {
-                      return _buildListItem(context, i);
-                    },
-                    scrollDirection: Axis.horizontal,
-                  ),
-                  Container(
+                  Center(
+                      child: _buildColorList(context)),
+                  Align(
+                    child: _buildGallery(),
                     alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        if (onTapPickImage != null && !isLoading) {
-                          onTapPickImage();
-                        }
-                      },
-                      child: AspectRatio(
-                        aspectRatio: 4 / 3.0,
-                        child: Container(
-                            decoration: LeftBlurDecoration(),
-                            child: Container(
-                              margin: EdgeInsets.only(left: 12),
-                              child: Icon(
-                                Icons.camera_alt,
-                                color: Colors.black,
-                              ),
-                            )),
-                      ),
-                    ),
                   )
                 ],
               ),

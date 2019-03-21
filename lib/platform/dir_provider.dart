@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/services.dart';
+import 'package:switch_decor/platform/logger.dart';
+
+final logger = createLogger("DirProvider");
 
 class DirProvider {
   static const platform = const MethodChannel('DirProvider');
@@ -19,7 +22,7 @@ class DirProvider {
           platform.invokeMethod('getPictureDir', {"name": name});
       return result;
     } on PlatformException catch (e) {
-      print("Failed to getPictureDir: '${e.message}'.");
+      logger.e("Failed to getPictureDir: '${e.message}'.");
       return Future.value(null);
     }
   }
@@ -30,7 +33,7 @@ class DirProvider {
           platform.invokeMethod('notifyScanFile', {"path": path});
       return result;
     } on PlatformException catch (e) {
-      print("Failed to getPictureDir: '${e.message}'.");
+      logger.e("Failed to getPictureDir: '${e.message}'.");
       return Future.value(false);
     }
   }

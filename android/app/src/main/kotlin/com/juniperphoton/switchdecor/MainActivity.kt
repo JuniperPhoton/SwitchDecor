@@ -44,6 +44,7 @@ class MainActivity : FlutterActivity(), DirProviderDelegate.Callback, WindowFeat
             launcherDelegate.register(it)
             shareFromNativeDelegate.register(it)
             windowFeatureDelegate.register(it)
+            LogDelegate().register(it)
         }
 
         onRequestNavigationColorChanged(Color.BLACK, false)

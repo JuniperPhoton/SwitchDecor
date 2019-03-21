@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:switch_decor/platform/logger.dart';
+
+final logger = createLogger("ShareFromNativeChannel");
 
 class ShareFromNativeCallback {
   void onPickFile(File file) {}
@@ -16,7 +19,7 @@ class ShareFromNativeChannel {
       if (c.method == "onNewFilePath") {
         final path = c.arguments["path"];
 
-        print("onNewFilePath: $path");
+        logger.i("onNewFilePath: $path");
 
         if (path != null) {
           callback?.onPickFile(File(path));
@@ -24,7 +27,7 @@ class ShareFromNativeChannel {
       } else if (c.method == "toggleDialog") {
         final bool show = c.arguments["show"];
 
-        print("toggleDialog: $show");
+        logger.i("toggleDialog: $show");
         callback?.toggleDialog(show);
       }
     });

@@ -92,7 +92,6 @@ object FileUriProcessor {
         } else if ("content".equals(uri.scheme!!, ignoreCase = true)) {
             return getDataColumn(context, uri, null, null)
         } else if ("file".equals(uri.scheme!!, ignoreCase = true)) {
-            // 注意，要用 encoded path，以避免文件名出现 % 导致的问题。
             return uri.encodedPath
         }
 

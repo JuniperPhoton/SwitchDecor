@@ -2,12 +2,9 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:switch_decor/platform/logger.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:switch_decor/model/color_set.dart';
 import 'package:switch_decor/util/build.dart';
-
-final logger = createLogger("CanvasPainter");
 
 class CanvasPainter extends CustomPainter {
   static const TINT_FRAME = false;
@@ -143,8 +140,8 @@ class CanvasPainter extends CustomPainter {
         var src = _getRectFromImage(contentImage, ratio: frameAspectRatio);
 
         if (isDebug() && filterQuality == FilterQuality.high) {
-          logger.w("output src content rect: $src, frameRect: $frameRect");
-          logger.w("output dst content rect: $contentRect");
+          print("========output src content rect: $src, frameRect: $frameRect");
+          print("========output dst content rect: $contentRect");
         }
 
         canvas.drawImageRect(contentImage, src, contentRect, _contentPaint);

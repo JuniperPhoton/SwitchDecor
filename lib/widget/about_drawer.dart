@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:switch_decor/platform/logger.dart';
 import 'package:switch_decor/res/dimensions.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:switch_decor/res/string.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info/package_info.dart';
-
-final logger = createLogger("AboutDrawer");
 
 class AboutDrawer extends StatelessWidget {
   final Color _color;
@@ -82,7 +79,7 @@ class AboutDrawer extends StatelessWidget {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      logger.e("Can not launch $url");
+      print("Can not launch $url");
     }
   }
 

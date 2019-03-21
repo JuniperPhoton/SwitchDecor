@@ -12,7 +12,6 @@ import UIImageColors
         
         ColorPickerDelegate().registerColorPickerChannel(controller)
         DirProviderDelegate().registerDirChannel(controller)
-        LoggerDelegate().registerDirChannel(controller)
         
         UIApplication.shared.setStatusBarHidden(true, with: UIStatusBarAnimation.none)
         GeneratedPluginRegistrant.register(with: self)

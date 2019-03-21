@@ -22,7 +22,6 @@
 		F0A86C89222E12E400C472AD /* ColorPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A86C88222E12E400C472AD /* ColorPickerDelegate.swift */; };
 		F0A86C8B222E133B00C472AD /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A86C8A222E133B00C472AD /* Misc.swift */; };
 		F0A86C8D222E18A800C472AD /* DirProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A86C8C222E18A800C472AD /* DirProviderDelegate.swift */; };
-		F0D4401F22425FEA00A0CC90 /* LoggerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D4401E22425FEA00A0CC90 /* LoggerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,7 +59,6 @@
 		F0A86C88222E12E400C472AD /* ColorPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerDelegate.swift; sourceTree = "<group>"; };
 		F0A86C8A222E133B00C472AD /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		F0A86C8C222E18A800C472AD /* DirProviderDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirProviderDelegate.swift; sourceTree = "<group>"; };
-		F0D4401E22425FEA00A0CC90 /* LoggerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,7 +152,6 @@
 				F0A86C88222E12E400C472AD /* ColorPickerDelegate.swift */,
 				F0A86C8A222E133B00C472AD /* Misc.swift */,
 				F0A86C8C222E18A800C472AD /* DirProviderDelegate.swift */,
-				F0D4401E22425FEA00A0CC90 /* LoggerDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -243,8 +240,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
-				"${PODS_ROOT}/../.symlinks/flutter/ios-release/Flutter.framework",
+				"${PODS_ROOT}/../.symlinks/flutter/ios/Flutter.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
 				"${BUILT_PRODUCTS_DIR}/image_picker/image_picker.framework",
 				"${BUILT_PRODUCTS_DIR}/package_info/package_info.framework",
@@ -255,7 +251,6 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Flutter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/image_picker.framework",
@@ -325,7 +320,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D4401F22425FEA00A0CC90 /* LoggerDelegate.swift in Sources */,
 				F0A86C89222E12E400C472AD /* ColorPickerDelegate.swift in Sources */,
 				F0A86C8B222E133B00C472AD /* Misc.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
@@ -425,7 +419,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.juniperphoton.switchDecor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -558,7 +551,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -587,7 +579,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

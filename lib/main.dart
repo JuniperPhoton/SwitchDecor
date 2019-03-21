@@ -5,7 +5,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:switch_decor/platform/logger.dart';
 import 'package:switch_decor/platform/share_from_native.dart';
 import 'package:switch_decor/platform/window_feature.dart';
 import 'package:switch_decor/res/dimensions.dart';
@@ -23,8 +22,6 @@ import 'package:switch_decor/widget/about_drawer.dart';
 import 'package:switch_decor/widget/bottom_action.dart';
 
 void main() => runApp(SwitchDecorApp());
-
-final logger = createLogger("SwitchDecor-Main");
 
 class SwitchDecorApp extends StatelessWidget {
   @override
@@ -81,7 +78,7 @@ class _MainViewState extends State<MainView>
         textColor: Colors.white,
         onPressed: () async {
           if (!await Launcher.launchFile(path)) {
-            logger.w("Can not launch $path");
+            print("Can not launch $path");
           }
         });
   }
@@ -97,14 +94,14 @@ class _MainViewState extends State<MainView>
         "${DateTime.now().millisecondsSinceEpoch}.png");
 
     if (path != null) {
-      logger.i("Retrieved file to save: $path");
+      print("Retrieved file to save: $path");
       var file = File(path);
 
       file = await _renderToFile(file.path);
       saveResult = file != null;
-      logger.i("File saved: $file");
+      print("File saved: $file");
     } else {
-      logger.w("Failed to get file to save");
+      print("Failed to get file to save");
     }
 
     if (saveResult) {
@@ -168,7 +165,7 @@ class _MainViewState extends State<MainView>
   }
 
   _onPickedFile(File file) async {
-    logger.i("file picked: ${file.path}");
+    print("file picked: ${file.path}");
 
     var bytes = await file.readAsBytes();
 
@@ -179,7 +176,7 @@ class _MainViewState extends State<MainView>
 
     var image = await decodeImageFromList(bytes);
     if (image != null) {
-      logger.i(
+      print(
           "=====file decoded====, width: ${image.width}, height: ${image.height}");
       setState(() {
         _contentImage = image;
@@ -187,7 +184,7 @@ class _MainViewState extends State<MainView>
 
       await _extractPrimaryColors(file);
     } else {
-      logger.w("=====file NOT decoded====");
+      print("=====file NOT decoded====");
     }
   }
 
@@ -199,7 +196,7 @@ class _MainViewState extends State<MainView>
   }
 
   _decodeFrameImages() async {
-    logger.i("===Decode images");
+    print("===Decode images");
 
     var frameImage = await _decodeImageFromPath("assets/images/wireframe.png");
     var sampleImage = await _decodeImageFromPath("assets/images/sample.jpg");

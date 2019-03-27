@@ -2,11 +2,11 @@
 
 An app to help you adding frame to your favorite screenshots from Nintendo Switch.
 
-This project is written in Flutter, supporting both iOS and Android platform.
+This project is written in [Flutter](https://flutter.dev/), supporting both iOS and Android platform.
 
-Visit the [official website](https://juniperphoton.net/switchdecor/) to download the pre-release apk, or download the open beta in [Google Play Store](https://play.google.com/store/apps/details?id=com.juniperphoton.switchdecor).
+Visit the [official website](https://juniperphoton.net/switchdecor/) to download the apk, or download in [Google Play Store](https://play.google.com/store/apps/details?id=com.juniperphoton.switchdecor).
 
-**It's coming to TestFlight in App Store.**
+**It's coming to App Store.**
 
 Some features:
 
@@ -16,6 +16,10 @@ Some features:
 - Save as high-res image to your album;
 
 ![](./design/prom.jpg)
+
+## Build
+
+To build this app for both iOS and Android, please refer to the [Flutter Doc](https://flutter.dev/docs). 
 
 ## Progress
 
@@ -34,6 +38,10 @@ This project is still **under construction**, and here is the features checklist
 ## Privacy
 
 Though you can see this app needs the camera permission, which is needed in image_picker plugin, this app will not open the camera and do further data collecting.
+
+## Copyright
+
+This is NOT the official app by Nintendo, and it's NOT authorized by Nintendo. So if the app violate the copyright of Nintendo Switch, please let me know.
 
 ## MIT License
 
